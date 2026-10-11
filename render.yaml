@@ -2,7 +2,7 @@ services:
   - type: web
     name: electicore
     runtime: python
-    plan: starter
+    plan: free
     buildCommand: pip install -r backend/requirements.txt
     startCommand: sh -c 'python -m flask --app backend.app db upgrade && waitress-serve --listen=0.0.0.0:$PORT backend.app:app'
     envVars:
@@ -12,11 +12,3 @@ services:
         generateValue: true
       - key: JWT_SECRET_KEY
         generateValue: true
-      - key: DATABASE_URL
-        value: sqlite:////var/data/electicore.db
-      - key: UPLOAD_DIR
-        value: /var/data/uploads
-    disk:
-      name: electicore-data
-      mountPath: /var/data
-      sizeGB: 1
