@@ -1,0 +1,958 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ELECTICORE — Smart Campus Portal</title>
+<script>try{const savedTheme=localStorage.getItem('electicore_theme');document.documentElement.dataset.theme=savedTheme||'dark'}catch(_error){document.documentElement.dataset.theme='dark'}</script>
+<style>
+:root{color-scheme:light;--bg:#f5f7fa;--surface:#fff;--surface-2:#f0f3f7;--surface-hover:#f7f8fa;--text:#182230;--muted:#667085;--line:#e3e8ef;--primary:#315fce;--primary-strong:#244eb5;--primary-soft:#edf3ff;--success:#18845b;--danger:#c2413b;--warning:#a96112;--shadow:0 8px 24px rgba(16,24,40,.055);--sidebar:#fff;--sidebar-text:#475467;--sidebar-muted:#98a2b3;--focus:rgba(49,95,206,.2);--radius:14px;--topbar-height:68px}
+[data-theme="dark"]{color-scheme:dark;--bg:#11151b;--surface:#191f27;--surface-2:#202833;--surface-hover:#252e39;--text:#edf1f7;--muted:#a1adbd;--line:#303a46;--primary:#8eafff;--primary-strong:#aac1ff;--primary-soft:#25334a;--success:#5dcc9a;--danger:#ff8279;--warning:#f2b866;--shadow:0 10px 30px rgba(0,0,0,.22);--sidebar:#151a21;--sidebar-text:#c4ccd8;--sidebar-muted:#7f8a99;--focus:rgba(142,175,255,.23)}
+*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;font-family:Inter,"Plus Jakarta Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background:var(--bg);color:var(--text);font-size:15px;line-height:1.55;transition:background-color .2s,color .2s}button,input,select,textarea{font:inherit}button{cursor:pointer}button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:3px solid var(--focus);outline-offset:2px}a{color:var(--primary)}
+.topbar{height:var(--topbar-height);background:color-mix(in srgb,var(--surface) 92%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--line);display:flex;align-items:center;justify-content:space-between;padding:0 28px;position:sticky;top:0;z-index:30;gap:24px}.brand{display:flex;align-items:center;gap:11px;font-weight:850;letter-spacing:.09em;font-size:14px;white-space:nowrap}.logo{width:36px;height:36px;border-radius:11px;background:#172b4d;color:#fff;display:grid;place-items:center;font-weight:850;box-shadow:inset 0 0 0 1px rgba(255,255,255,.14)}[data-theme="dark"] .logo{background:#315fce}
+.nav{display:flex;gap:4px;align-items:center}.nav button{border:0;background:transparent;color:var(--muted);padding:9px 12px;border-radius:9px;font-size:13px;font-weight:650;transition:background .16s,color .16s}.nav button:hover,.nav button.active{background:var(--primary-soft);color:var(--primary-strong)}.userbox{display:flex;align-items:center;gap:10px;color:var(--text);padding:4px!important;border-radius:999px}.userbox:hover{background:var(--surface-hover)!important}.avatar{width:38px;height:38px;border-radius:50%;background:var(--primary-soft);color:var(--primary-strong);display:grid;place-items:center;font-weight:800}.top-actions{display:flex;align-items:center;gap:9px}.icon-button{width:38px;height:38px;display:grid;place-items:center;border:1px solid var(--line);border-radius:11px;background:var(--surface);color:var(--text);font-size:17px}.icon-button:hover{background:var(--surface-hover)}
+.app{display:grid;grid-template-columns:244px minmax(0,1fr);min-height:calc(100vh - var(--topbar-height))}.sidebar{background:var(--sidebar);color:var(--sidebar-text);padding:22px 13px;position:sticky;top:var(--topbar-height);height:calc(100vh - var(--topbar-height));border-right:1px solid var(--line);display:flex;flex-direction:column;z-index:35;overflow:auto}.side-title{font-size:10px;text-transform:uppercase;letter-spacing:.12em;color:var(--sidebar-muted);font-weight:750;padding:11px 12px 7px}.side button{width:100%;text-align:left;border:0;background:transparent;color:var(--sidebar-text);padding:10px 12px;border-radius:9px;margin:2px 0;font-size:13px;font-weight:600;transition:background .16s,color .16s}.side button:hover,.side button.active{background:var(--primary-soft);color:var(--primary-strong)}#adminArea button{color:var(--warning)}.side small{display:block;color:var(--sidebar-muted);margin:auto 12px 2px;line-height:1.5;padding-top:24px}.drawer-scrim{display:none}
+main{padding:32px clamp(20px,3vw,44px);max-width:1580px;width:100%;margin:0 auto}.page{display:none;opacity:0;transform:translateY(7px)}.page.active{display:block;animation:page-in .24s ease forwards}@keyframes page-in{to{opacity:1;transform:translateY(0)}}
+.hero{background:#182b49;color:#fff;border-radius:18px;padding:40px;box-shadow:var(--shadow);position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08)}.hero:after{content:"";position:absolute;width:310px;height:310px;border-radius:50%;right:-100px;top:-160px;border:1px solid rgba(255,255,255,.13);box-shadow:0 0 0 38px rgba(255,255,255,.025),0 0 0 78px rgba(255,255,255,.02)}.hero>*{position:relative;z-index:1}.eyebrow{font-size:11px;text-transform:uppercase;letter-spacing:.14em;opacity:.78;font-weight:800}.hero h1{font-size:clamp(34px,4vw,48px);line-height:1.08;letter-spacing:-.045em;margin:11px 0}.hero p{max-width:720px;color:#d2dbea;line-height:1.7}.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:22px}
+.btn{border:1px solid transparent;border-radius:9px;padding:10px 15px;font-size:13px;font-weight:700;transition:transform .16s,background .16s,border-color .16s,box-shadow .16s}.btn:hover:not(:disabled){transform:translateY(-1px)}.btn:disabled{opacity:.48;cursor:not-allowed}.primary{background:var(--primary);color:#fff}.primary:hover:not(:disabled){background:var(--primary-strong);box-shadow:0 4px 12px var(--focus)}.secondary{background:var(--surface);color:var(--text);border-color:var(--line)}.secondary:hover{background:var(--surface-hover)}.ghost{background:var(--primary-soft);color:var(--primary-strong)}.danger{background:color-mix(in srgb,var(--danger) 14%,var(--surface));color:var(--danger)}.success{background:color-mix(in srgb,var(--success) 14%,var(--surface));color:var(--success)}
+.grid{display:grid;gap:16px}.stats{grid-template-columns:repeat(4,minmax(0,1fr));margin:20px 0}.two{grid-template-columns:repeat(2,minmax(0,1fr))}.three{grid-template-columns:repeat(3,minmax(0,1fr))}.card{background:var(--surface);border:1px solid var(--line);border-radius:var(--radius);padding:20px;box-shadow:var(--shadow);transition:transform .18s,border-color .18s,box-shadow .18s;color:var(--text)}.card h2,.card h3{letter-spacing:-.018em}.card h3{margin:8px 0}.card:has(.card-actions):hover{transform:translateY(-2px);border-color:color-mix(in srgb,var(--primary) 32%,var(--line));box-shadow:0 12px 28px rgba(16,24,40,.09)}.stat{display:flex;justify-content:space-between;align-items:flex-start}.stat .num{font-size:30px;font-weight:800;letter-spacing:-.045em;margin-top:7px}.icon{width:42px;height:42px;border-radius:11px;background:var(--primary-soft);color:var(--primary-strong);display:grid;place-items:center;font-size:19px}.muted{color:var(--muted)}.section-title{display:flex;align-items:center;justify-content:space-between;margin:30px 0 14px;gap:16px}.section-title h2{font-size:21px;letter-spacing:-.03em;margin:0}.section-title p{margin:4px 0 0;color:var(--muted);font-size:13px}
+.dept-group{margin-bottom:28px}.dept-group-head{display:flex;align-items:center;gap:10px;margin-bottom:12px;padding-bottom:9px;border-bottom:1px solid var(--line)}.dept-group-head h3{margin:0;font-size:16px}.tag{display:inline-flex;padding:4px 9px;border-radius:999px;font-size:11px;font-weight:750;background:var(--surface-2);color:var(--muted)}.tag.open{background:color-mix(in srgb,var(--success) 14%,var(--surface));color:var(--success)}.tag.pending{background:color-mix(in srgb,var(--warning) 15%,var(--surface));color:var(--warning)}.tag.closed{background:var(--surface-2);color:var(--muted)}
+.event,.faculty,.candidate{display:flex;gap:14px}.event-img{width:72px;height:68px;flex:none;border-radius:11px;background:var(--surface-2);display:grid;place-items:center;font-size:24px}.faculty .avatar{flex:none}.card-actions{display:flex;gap:8px;margin-top:15px;flex-wrap:wrap}.searchrow{display:flex;gap:10px;margin:18px 0}.searchrow input,.searchrow select,.form input,.form textarea,.form select{border:1px solid var(--line);border-radius:9px;padding:11px 12px;background:var(--surface);color:var(--text);outline:none;width:100%;transition:border .15s,box-shadow .15s}.searchrow input:focus,.searchrow select:focus,.form input:focus,.form textarea:focus,.form select:focus{border-color:var(--primary);box-shadow:0 0 0 3px var(--focus)}.form{display:grid;gap:14px}.form label{font-size:13px;font-weight:700;color:var(--text)}.form textarea{min-height:130px;resize:vertical}.form input[type=checkbox],.form input[type=radio]{width:auto;accent-color:var(--primary)}
+.notice{padding:13px 15px;border-radius:10px;background:var(--primary-soft);color:var(--primary-strong);font-size:13px;line-height:1.55;border:1px solid color-mix(in srgb,var(--primary) 15%,transparent)}.warning{background:color-mix(in srgb,var(--warning) 11%,var(--surface));color:var(--warning);border-color:color-mix(in srgb,var(--warning) 20%,transparent)}.safe{background:color-mix(in srgb,var(--success) 11%,var(--surface));color:var(--success);border-color:color-mix(in srgb,var(--success) 20%,transparent)}.timeline{position:relative;margin:20px 0 5px}.step{display:flex;gap:14px;position:relative;padding-bottom:22px}.dot{width:25px;height:25px;flex:none;border-radius:50%;background:var(--surface-2);color:var(--muted);display:grid;place-items:center;font-size:12px;font-weight:800;z-index:2}.step.done .dot{background:color-mix(in srgb,var(--success) 16%,var(--surface));color:var(--success)}.step.current .dot{background:var(--primary-soft);color:var(--primary-strong)}.step:not(:last-child):before{content:"";position:absolute;left:12px;top:25px;width:2px;height:calc(100% - 20px);background:var(--line)}.step.done:not(:last-child):before{background:color-mix(in srgb,var(--success) 55%,var(--line))}.bar{height:7px;background:var(--surface-2);border-radius:99px;overflow:hidden}.bar span{display:block;height:100%;background:var(--primary);border-radius:99px}
+.candidate{align-items:center;cursor:pointer}.candidate:has(input:checked){border-color:var(--primary);background:var(--primary-soft);box-shadow:0 0 0 2px var(--focus)}.modal{position:fixed;inset:0;background:rgba(8,14,23,.58);backdrop-filter:blur(4px);display:none;place-items:center;padding:20px;z-index:50}.modal.show{display:grid;animation:fade-in .16s ease}@keyframes fade-in{from{opacity:0}to{opacity:1}}.modalbox{background:var(--surface);color:var(--text);border:1px solid var(--line);width:min(650px,100%);max-height:90vh;overflow:auto;border-radius:16px;padding:24px;box-shadow:0 24px 70px rgba(0,0,0,.22)}.modalhead{display:flex;justify-content:space-between;align-items:center;gap:16px}.close{border:1px solid var(--line);background:var(--surface-2);color:var(--text);width:34px;height:34px;border-radius:9px;flex:none}.toast{position:fixed;right:20px;bottom:20px;background:#172b4d;color:#fff;padding:13px 17px;border-radius:10px;box-shadow:var(--shadow);display:none;z-index:80}.toast.show{display:block;animation:page-in .18s ease}footer{margin:45px -44px -32px;padding:28px 44px;background:#172b4d;color:#cbd5e1}footer strong{color:#fff}.mobile{display:none}
+.topbar,.sidebar,.side button,.card,.icon,.tag,.notice,.modalbox,.btn,.searchrow input,.searchrow select,.form input,.form textarea,.form select{transition-property:background-color,color,border-color,box-shadow,transform;transition-duration:.18s}
+[data-theme="dark"] .hero{background:#1d2a3b}[data-theme="dark"] .hero[style*="linear-gradient"]{background:#1b3029!important}[data-theme="dark"] .hero .tag{background:#202a33!important;color:#d6e0eb!important}[data-theme="dark"] footer{background:#151a21}[data-theme="dark"] .event-img{background:#242d38}[data-theme="dark"] .close{background:var(--surface-2)}[data-theme="dark"] .tag{background:var(--surface-2);color:var(--muted)}[data-theme="dark"] .tag.open{background:#18382f;color:#72d6a7}[data-theme="dark"] .tag.pending{background:#423322;color:#f2bd73}[data-theme="dark"] .tag.closed{background:var(--surface-2);color:var(--muted)}[data-theme="dark"] input,[data-theme="dark"] textarea,[data-theme="dark"] select{color-scheme:dark}[data-theme="dark"] .secondary{background:var(--surface-2)}[data-theme="dark"] .secondary:hover{background:var(--surface-hover)}[data-theme="dark"] .primary{background:#9bb8ff;color:#101722}[data-theme="dark"] .primary:hover:not(:disabled){background:#b0c6ff}
+@media(max-width:1100px){.nav{display:none}.mobile{display:grid}.app{grid-template-columns:1fr}.sidebar{position:fixed;left:0;top:var(--topbar-height);width:270px;height:calc(100dvh - var(--topbar-height));transform:translateX(-105%);transition:transform .23s ease;box-shadow:var(--shadow)}.sidebar.open{transform:translateX(0)}.drawer-scrim.show{display:block;position:fixed;inset:var(--topbar-height) 0 0;background:rgba(9,14,22,.42);z-index:34}.stats{grid-template-columns:repeat(2,1fr)}.grid.four{grid-template-columns:repeat(2,minmax(0,1fr))!important}}
+@media(max-width:700px){main{padding:20px 16px}.hero{padding:28px 22px}.hero h1{font-size:34px}.stats,.two,.three,.grid.four{grid-template-columns:1fr!important}.topbar{padding:0 14px;gap:10px}.brand{font-size:12px}.top-actions{gap:6px}.userbox .name{display:none}.searchrow{flex-direction:column}.section-title{align-items:flex-start}.section-title>.btn{flex:none}footer{margin:30px -16px -20px;padding:24px 16px}.event{gap:10px}.modalbox{padding:19px}.card{padding:17px}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+
+/* ===== ELECTICORE PREMIUM LAYER (scoped overrides) ===== */
+:root{--bg:#f2f5fc;--surface:rgba(255,255,255,.8);--surface-2:rgba(228,235,251,.8);--surface-hover:#fff;--text:#0c1427;--muted:#566280;--line:rgba(30,50,110,.12);--primary:#2b62f5;--primary-strong:#1f4bd1;--primary-soft:rgba(43,98,245,.1);--violet:#7c5cff;--radius:18px;--shadow:0 1px 0 rgba(255,255,255,.9) inset,0 12px 30px -14px rgba(20,35,90,.25);--sidebar:rgba(255,255,255,.72);--focus:rgba(43,98,245,.28);--ease:cubic-bezier(.22,1,.36,1)}
+[data-theme="dark"]{--bg:#060a14;--surface:rgba(18,26,46,.74);--surface-2:rgba(32,44,74,.7);--surface-hover:rgba(30,42,74,.9);--text:#eaf0ff;--muted:#93a1c0;--line:rgba(130,160,255,.15);--primary:#6f9bff;--primary-strong:#9bb9ff;--primary-soft:rgba(111,155,255,.15);--violet:#a28bff;--shadow:0 1px 0 rgba(255,255,255,.06) inset,0 18px 40px -18px rgba(0,0,0,.7);--sidebar:rgba(10,15,30,.72);--focus:rgba(111,155,255,.34)}
+body{font-family:Inter,"Plus Jakarta Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;background-color:var(--bg);background-image:radial-gradient(900px 520px at 6% -6%,rgba(43,98,245,.17),transparent 60%),radial-gradient(760px 520px at 100% 8%,rgba(124,92,255,.14),transparent 60%);background-attachment:fixed}
+.logo{background:linear-gradient(135deg,#2b62f5,#7c5cff)!important;box-shadow:0 6px 16px -6px rgba(80,100,255,.7),inset 0 1px 0 rgba(255,255,255,.35)}
+.logo svg{width:20px;height:20px}
+.topbar{box-shadow:0 1px 0 rgba(255,255,255,.04) inset}
+.sidebar{backdrop-filter:blur(18px)}
+.side button{position:relative;display:flex;align-items:center;gap:11px}
+.side button .tag{margin-left:auto;float:none!important}
+.side button svg,.nav svg{width:18px;height:18px;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round}
+.side button.active::before{content:"";position:absolute;left:-6px;top:22%;bottom:22%;width:3px;border-radius:3px;background:linear-gradient(var(--primary),var(--violet))}
+.card{position:relative;background:var(--surface);backdrop-filter:blur(14px);border-radius:var(--radius);box-shadow:var(--shadow);will-change:transform}
+.card::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;opacity:0;transition:opacity .25s;background:radial-gradient(220px circle at var(--gx,50%) var(--gy,0%),var(--primary-soft),transparent 70%)}
+.card:hover::before{opacity:1}
+.card:has(.card-actions):hover{transform:translateY(-3px)}
+.icon{background:linear-gradient(145deg,var(--primary-soft),rgba(124,92,255,.14));box-shadow:inset 0 1px 0 rgba(255,255,255,.35),0 6px 14px -8px var(--primary)}
+.icon svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.stat .num{background:linear-gradient(180deg,var(--text),var(--muted));-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
+.btn.primary,[data-theme] .btn.primary{background:linear-gradient(135deg,var(--primary),var(--violet));color:#fff;box-shadow:0 8px 20px -10px var(--primary),inset 0 1px 0 rgba(255,255,255,.3)}
+[data-theme="dark"] .btn.primary{color:#081022}
+.btn.primary:hover:not(:disabled){filter:brightness(1.08)}
+.btn:active:not(:disabled){transform:translateY(1px) scale(.98)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--primary);outline-offset:3px}
+.tag{backdrop-filter:blur(6px)}
+.card:has(>p.muted:only-child){text-align:center;border-style:dashed;background:transparent;box-shadow:none;padding:30px 20px}
+footer{margin:48px 0 0!important;border-radius:var(--radius);background:linear-gradient(135deg,#0a1230,#111a3d)!important}
+/* hero */
+.hero.hero-3d{display:grid;grid-template-columns:1.05fr .95fr;align-items:center;gap:20px;padding:clamp(26px,4vw,56px);min-height:420px;border-color:rgba(140,170,255,.2);background:radial-gradient(560px 340px at 88% 15%,rgba(124,92,255,.38),transparent 65%),radial-gradient(520px 340px at 0% 100%,rgba(43,98,245,.34),transparent 60%),linear-gradient(160deg,#0a1230,#070b1c)!important;box-shadow:0 30px 60px -30px rgba(20,40,140,.55),inset 0 1px 0 rgba(255,255,255,.1)}
+.hero-3d::after{display:none}
+.hero-3d .hero-copy>*{animation:rise .7s var(--ease) backwards}
+.hero-3d .hero-copy>:nth-child(2){animation-delay:.08s}.hero-3d .hero-copy>:nth-child(3){animation-delay:.16s}.hero-3d .hero-copy>:nth-child(4){animation-delay:.24s}
+.hero-3d h1{background:linear-gradient(180deg,#fff 30%,#b4c5ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero .btn.secondary{background:rgba(255,255,255,.08);color:#fff;border-color:rgba(255,255,255,.24);backdrop-filter:blur(8px)}
+.hero-stage{position:relative;height:360px;perspective:1000px;animation:rise .9s .2s var(--ease) backwards}
+.stage-in{position:absolute;inset:0;transform-style:preserve-3d;transform:rotateY(calc(var(--mx,0)*9deg)) rotateX(calc(var(--my,0)*-7deg));transition:transform .3s var(--ease)}
+.net{position:absolute;inset:0;width:100%;height:100%}
+.net path{stroke-dasharray:4 7;animation:dash 4s linear infinite}.net circle{animation:pulse 2.6s ease-in-out infinite}
+.cube{position:absolute;left:50%;top:50%;width:120px;height:120px;margin:-60px 0 0 -60px;transform-style:preserve-3d;transform:rotateX(-22deg) rotateY(30deg);animation:spin 24s linear infinite}
+.cube i{position:absolute;inset:0;border:1px solid rgba(165,195,255,.6);background:linear-gradient(135deg,rgba(80,120,255,.3),rgba(124,92,255,.14));box-shadow:inset 0 0 30px rgba(120,160,255,.32)}
+.gp{position:absolute;display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:12px;font-size:12px;font-weight:700;color:#e8eeff;background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.2);backdrop-filter:blur(10px);box-shadow:0 14px 30px -14px rgba(0,0,0,.6),inset 0 1px 0 rgba(255,255,255,.2);transform:translate3d(calc(var(--mx,0)*var(--d)*1px),calc(var(--my,0)*var(--d)*1px),var(--z));animation:float 6s ease-in-out infinite}
+.gp b{width:7px;height:7px;border-radius:50%;background:#6ee7b7;box-shadow:0 0 10px #6ee7b7}
+.g1{left:2%;top:14%}.g2{right:0;top:44%;animation-delay:-2s}.g3{left:14%;bottom:8%;animation-delay:-4s}
+.pt{position:absolute;width:var(--s);height:var(--s);border-radius:50%;background:#9db8ff;opacity:.55;animation:drift 9s ease-in-out infinite}
+@keyframes spin{to{transform:rotateX(-22deg) rotateY(390deg)}}
+@keyframes float{50%{translate:0 -10px}}
+@keyframes drift{50%{transform:translateY(-18px);opacity:.15}}
+@keyframes dash{to{stroke-dashoffset:-44}}
+@keyframes pulse{50%{opacity:.35}}
+@keyframes rise{from{opacity:0;transform:translateY(14px)}}
+/* stagger (backwards fill so hover/tilt transforms still work) */
+.page.active .grid:not(#eventGrid):not(.three)>*{animation:rise .55s var(--ease) backwards;animation-delay:calc(var(--i,0)*55ms)}
+.page.active .grid:not(#eventGrid):not(.three)>:nth-child(1){--i:0}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(2){--i:1}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(3){--i:2}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(4){--i:3}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(5){--i:4}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(6){--i:5}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(7){--i:6}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(8){--i:7}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(9){--i:8}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(10){--i:9}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(11){--i:10}.page.active .grid:not(#eventGrid):not(.three)>:nth-child(12){--i:11}.cube i:nth-child(1){transform:translateZ(60px)}.cube i:nth-child(2){transform:rotateY(90deg) translateZ(60px)}.cube i:nth-child(3){transform:rotateY(180deg) translateZ(60px)}.cube i:nth-child(4){transform:rotateY(-90deg) translateZ(60px)}.cube i:nth-child(5){transform:rotateX(90deg) translateZ(60px)}.cube i:nth-child(6){transform:rotateX(-90deg) translateZ(60px)}
+/* modal motion */
+.modal.show .modalbox{animation:pop .3s var(--ease)}
+.modal.leaving{animation:fade-out .16s ease forwards}
+.modalbox{background:var(--surface-hover);backdrop-filter:blur(20px);border-radius:20px}
+@keyframes pop{from{opacity:0;transform:translateY(14px) scale(.97)}}
+@keyframes fade-out{to{opacity:0}}
+@media(max-width:900px){.hero.hero-3d{grid-template-columns:1fr}.hero-stage{height:260px}}
+@media(max-width:700px){.pt{display:none}.cube{animation:none}.gp{font-size:11px;padding:7px 11px}}
+@media(prefers-reduced-motion:reduce){.cube,.gp,.pt,.net path,.net circle{animation:none!important}.stage-in{transform:none!important}}
+
+/* ===== SITEWIDE MOTION LAYER ===== */
+@property --ang{syntax:"<angle>";inherits:false;initial-value:0deg}
+.app{position:relative;z-index:1}
+#fx{position:fixed;inset:0;width:100%;height:100%;z-index:0;pointer-events:none;opacity:.5}
+[data-theme="light"] #fx{opacity:.3}
+body::before,body::after{content:"";position:fixed;z-index:0;pointer-events:none;width:46vmax;height:46vmax;border-radius:50%;filter:blur(36px)}
+body::before{left:-14vmax;top:-16vmax;background:radial-gradient(circle,rgba(43,98,245,.24),transparent 65%);animation:orb1 24s ease-in-out infinite alternate}
+body::after{right:-16vmax;bottom:-18vmax;background:radial-gradient(circle,rgba(124,92,255,.22),transparent 65%);animation:orb2 28s ease-in-out infinite alternate}
+@keyframes orb1{to{transform:translate3d(14vmax,10vmax,0) scale(1.15)}}
+@keyframes orb2{to{transform:translate3d(-12vmax,-8vmax,0) scale(1.2)}}
+#spot{position:fixed;inset:0;z-index:0;pointer-events:none;background:radial-gradient(420px circle at var(--cx,50%) var(--cy,30%),var(--primary-soft),transparent 70%);opacity:0;transition:opacity .4s}
+#spot.on{opacity:1}
+#sbar{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,var(--primary),var(--violet));z-index:60;pointer-events:none}
+.topbar{animation:dropin .7s var(--ease) backwards}
+.side button{animation:slidex .55s var(--ease) backwards;animation-delay:calc(var(--n,0)*55ms + 150ms)}
+@keyframes dropin{from{transform:translateY(-100%);opacity:0}}
+@keyframes slidex{from{transform:translateX(-18px);opacity:0}}
+.page.active{animation:flip .65s var(--ease) both}
+@keyframes flip{from{opacity:0;transform:perspective(1200px) rotateX(5deg) translateY(26px);filter:blur(6px)}to{opacity:1;transform:none;filter:none}}
+.rv{opacity:0;filter:blur(6px);animation:none!important;transition:opacity .8s var(--ease),transform .8s var(--ease),filter .8s var(--ease)}
+.rv[data-rv=u]{transform:translateY(34px) scale(.97)}
+.rv[data-rv=l]{transform:translateX(-42px) rotateY(8deg)}
+.rv[data-rv=r]{transform:translateX(42px) rotateY(-8deg)}
+.rv[data-rv=t]{transform:perspective(900px) rotateX(14deg) translateY(30px)}
+.rv.in{opacity:1;transform:none;filter:none}
+.rv-done{animation:none!important}
+.section-title h2::after{content:"";display:block;height:3px;width:44px;margin-top:8px;border-radius:3px;background:linear-gradient(90deg,var(--primary),var(--violet));transform-origin:left;animation:sweep .9s .25s var(--ease) backwards}
+@keyframes sweep{from{transform:scaleX(0)}}
+.stt{display:flex;align-items:center;gap:16px;min-width:0}
+.orbit{position:relative;flex:none;width:58px;height:58px;perspective:260px;pointer-events:none}
+.orbit i{position:absolute;inset:4px;border-radius:50%;border:1.5px solid var(--primary);opacity:.7;transform:rotateX(68deg) rotateZ(0);animation:ring 6s linear infinite}
+.orbit i:nth-child(2){inset:12px;border-color:var(--violet);animation-duration:4s;animation-direction:reverse;transform:rotateX(68deg) rotateY(40deg)}
+.orbit b{position:absolute;left:50%;top:50%;width:12px;height:12px;margin:-6px;border-radius:50%;background:linear-gradient(135deg,var(--primary),var(--violet));box-shadow:0 0 18px var(--primary);animation:pulse 2.6s ease-in-out infinite}
+@keyframes ring{to{transform:rotateX(68deg) rotateZ(360deg)}}
+.stat::after,.card:has(.card-actions)::after{content:"";position:absolute;inset:-1px;border-radius:inherit;padding:1.5px;pointer-events:none;opacity:0;transition:opacity .3s;background:conic-gradient(from var(--ang),transparent 68%,var(--primary),var(--violet),transparent);-webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);-webkit-mask-composite:xor;mask-composite:exclude;animation:ang 4s linear infinite}
+.stat:hover::after,.card:has(.card-actions):hover::after{opacity:1}
+@keyframes ang{to{--ang:360deg}}
+.hero:not(.hero-3d)::before{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(110deg,transparent 35%,rgba(255,255,255,.09) 50%,transparent 65%);transform:translateX(-100%);animation:sheen 7s 1s ease-in-out infinite}
+.hero:not(.hero-3d)::after{animation:breathe 7s ease-in-out infinite}
+@keyframes sheen{to{transform:translateX(100%)}}
+@keyframes breathe{50%{transform:scale(1.12);opacity:.7}}
+.page.active .step{animation:rise .55s var(--ease) backwards;animation-delay:calc(var(--k,0)*130ms + 300ms)}
+.step.current .dot{animation:ping 2.2s ease-out infinite}
+@keyframes ping{0%{box-shadow:0 0 0 0 var(--primary)}70%,100%{box-shadow:0 0 0 10px transparent}}
+.bar span{transform-origin:left;animation:grow 1.1s .3s var(--ease) backwards}
+@keyframes grow{from{transform:scaleX(0)}}
+.btn{position:relative;overflow:hidden}
+.ripple{position:absolute;border-radius:50%;background:rgba(255,255,255,.45);transform:scale(0);animation:rip .6s ease-out forwards;pointer-events:none}
+@keyframes rip{to{transform:scale(1);opacity:0}}
+.modalbox .candidate{animation:rise .45s var(--ease) backwards;animation-delay:calc(var(--i,0)*60ms + 100ms)}
+.candidate:has(input:checked){animation:selpulse .5s var(--ease)}
+@keyframes selpulse{40%{transform:scale(1.025)}}
+.toast.show{animation:toastin .5s cubic-bezier(.34,1.56,.64,1)}
+@keyframes toastin{from{opacity:0;transform:translateY(24px) scale(.9)}}
+.page.active .step:nth-child(1){--k:0}.modalbox .candidate:nth-child(1){--i:0}.page.active .step:nth-child(2){--k:1}.modalbox .candidate:nth-child(2){--i:1}.page.active .step:nth-child(3){--k:2}.modalbox .candidate:nth-child(3){--i:2}.page.active .step:nth-child(4){--k:3}.modalbox .candidate:nth-child(4){--i:3}.page.active .step:nth-child(5){--k:4}.modalbox .candidate:nth-child(5){--i:4}.page.active .step:nth-child(6){--k:5}.modalbox .candidate:nth-child(6){--i:5}.page.active .step:nth-child(7){--k:6}.modalbox .candidate:nth-child(7){--i:6}.page.active .step:nth-child(8){--k:7}.modalbox .candidate:nth-child(8){--i:7}
+@media(max-width:700px){.orbit{display:none}body::before,body::after{animation:none}}
+@media(prefers-reduced-motion:reduce){.orbit i,.orbit b,body::before,body::after,.step.current .dot{animation:none!important}.rv{opacity:1!important;filter:none!important;transform:none!important}}
+
+/* Lightweight motion and scrolling overrides */
+html{scroll-behavior:smooth;scroll-padding-top:var(--topbar-height)}
+body{background-attachment:scroll}
+body::before,body::after{display:none}
+.topbar,.sidebar,.card,.modalbox{backdrop-filter:none!important}
+.page.active{animation:page-enter .32s cubic-bezier(.2,.7,.2,1) both}
+@keyframes page-enter{from{opacity:0;transform:translate3d(0,10px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
+.stat::after,.card:has(.card-actions)::after{display:none!important;animation:none!important}
+.section-title h2::after{animation:none}
+.notice.pending{background:color-mix(in srgb,var(--warning) 11%,var(--surface));color:var(--warning);border-color:color-mix(in srgb,var(--warning) 20%,transparent)}
+.hero:not(.hero-3d)::before,.hero:not(.hero-3d)::after{animation:none!important}
+.cube{animation-duration:40s}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.page.active{animation:none}}
+.modal{backdrop-filter:none}
+.modalbox{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable}
+#modalContent:has(.status-report-list) .modalhead{position:sticky;top:-24px;z-index:4;margin:-8px -4px 12px;padding:8px 4px 12px;background:var(--surface-hover);border-bottom:1px solid var(--line)}
+.status-report-list{gap:12px}
+.status-report-list>.card{will-change:auto;transition:none;box-shadow:none;backdrop-filter:none}
+.status-report-list>.card::before{display:none}
+.status-report-list>.card:hover{transform:none!important;box-shadow:none!important}
+
+/* ELECTICORE terminal theme, inspired by the supplied portfolio. */
+:root{
+  --bg:#04060b;--surface:rgba(12,18,32,.94);--surface-2:#111a29;--surface-hover:#101827;
+  --text:#e6edf7;--muted:#9aa8bd;--line:rgba(148,175,220,.14);
+  --primary:#c8ff4d;--primary-strong:#dcff8a;--primary-soft:rgba(200,255,77,.11);
+  --violet:#5ce1ff;--success:#a7e85c;--danger:#ff6b78;--warning:#ffc861;
+  --sidebar:rgba(7,11,19,.97);--sidebar-text:#c5d0df;--sidebar-muted:#718096;
+  --focus:rgba(200,255,77,.3);--shadow:0 16px 42px -24px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.035);
+}
+[data-theme="dark"]{
+  color-scheme:dark;--bg:#04060b;--surface:rgba(12,18,32,.94);--surface-2:#111a29;--surface-hover:#101827;
+  --text:#e6edf7;--muted:#9aa8bd;--line:rgba(148,175,220,.14);
+  --primary:#c8ff4d;--primary-strong:#dcff8a;--primary-soft:rgba(200,255,77,.11);
+  --violet:#5ce1ff;--success:#a7e85c;--danger:#ff6b78;--warning:#ffc861;
+  --sidebar:rgba(7,11,19,.97);--sidebar-text:#c5d0df;--sidebar-muted:#718096;
+  --focus:rgba(200,255,77,.3);--shadow:0 16px 42px -24px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.035);
+}
+[data-theme="light"]{
+  --bg:#f4f7f1;--surface:rgba(255,255,255,.94);--surface-2:#eaf0e5;--surface-hover:#f7faf4;
+  --text:#142018;--muted:#586b5e;--line:rgba(34,65,42,.15);
+  --primary:#426b08;--primary-strong:#345606;--primary-soft:rgba(91,139,26,.11);
+  --violet:#087c91;--success:#397b12;--danger:#b52d3b;--warning:#96570a;
+  --sidebar:#edf2e9;--sidebar-text:#34483a;--sidebar-muted:#718071;--focus:rgba(66,107,8,.27);
+  --shadow:0 12px 30px -18px rgba(25,55,33,.24),inset 0 1px 0 rgba(255,255,255,.9);
+}
+body{
+  background-color:var(--bg);
+  background-image:radial-gradient(900px 600px at 5% -12%,rgba(92,225,255,.08),transparent 62%),radial-gradient(760px 520px at 100% 4%,rgba(200,255,77,.07),transparent 62%);
+  background-attachment:fixed;
+}
+body::before{
+  display:block;inset:0;width:auto;height:auto;border-radius:0;filter:none;
+  background-image:linear-gradient(to right,rgba(148,175,220,.035) 1px,transparent 1px),linear-gradient(to bottom,rgba(148,175,220,.035) 1px,transparent 1px);
+  background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 25%,#000 12%,transparent 82%);
+}
+body::after{display:none}
+[data-theme="light"] body{background-image:radial-gradient(900px 600px at 5% -12%,rgba(8,124,145,.08),transparent 62%),radial-gradient(760px 520px at 100% 4%,rgba(91,139,26,.08),transparent 62%)}
+[data-theme="light"] body::before{background-image:linear-gradient(to right,rgba(34,65,42,.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(34,65,42,.04) 1px,transparent 1px)}
+#fx{opacity:.18}
+[data-theme="light"] #fx{opacity:.12}
+.topbar{background:rgba(7,11,19,.9);border-bottom-color:var(--line);box-shadow:0 1px 0 rgba(200,255,77,.025) inset}
+[data-theme="light"] .topbar{background:rgba(244,247,241,.92)}
+.logo{background:#0d1723!important;color:var(--primary);border:1px solid rgba(200,255,77,.55);box-shadow:0 0 20px -8px var(--primary),inset 0 1px 0 rgba(255,255,255,.08)}
+.logo svg{stroke:var(--primary)}.logo svg circle{fill:var(--primary)}
+.nav button:hover,.nav button.active,.side button:hover,.side button.active{background:var(--primary-soft);color:var(--primary)}
+[data-theme="light"] .nav button:hover,[data-theme="light"] .nav button.active,[data-theme="light"] .side button:hover,[data-theme="light"] .side button.active{color:var(--primary-strong)}
+.side button.active::before{background:linear-gradient(var(--primary),var(--violet))}
+.avatar{background:var(--primary-soft);color:var(--primary)}
+.icon-button{background:var(--surface);border-color:var(--line)}
+.hero.hero-3d{
+  background:radial-gradient(560px 340px at 88% 12%,rgba(92,225,255,.14),transparent 65%),radial-gradient(520px 340px at 0% 100%,rgba(200,255,77,.09),transparent 60%),linear-gradient(155deg,#0a1019,#06090f 72%)!important;
+  border-color:rgba(200,255,77,.18);box-shadow:0 30px 60px -34px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.055);
+}
+[data-theme="light"] .hero.hero-3d{background:radial-gradient(560px 340px at 88% 12%,rgba(8,124,145,.2),transparent 65%),radial-gradient(520px 340px at 0% 100%,rgba(91,139,26,.2),transparent 60%),linear-gradient(155deg,#14231b,#0b1510 72%)!important}
+.hero-3d h1{background:linear-gradient(100deg,#f1f7e8 10%,var(--primary) 56%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
+.hero-copy .eyebrow,.section-title .eyebrow{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--primary);letter-spacing:.14em}
+.hero-copy .eyebrow::before{content:"// ";opacity:.72}
+.hero .btn.primary,[data-theme] .hero .btn.primary{background:linear-gradient(110deg,var(--primary),var(--violet));color:#07100a;box-shadow:0 8px 24px -12px var(--primary),inset 0 1px 0 rgba(255,255,255,.42)}
+.hero .btn.secondary{background:rgba(255,255,255,.045);border-color:rgba(200,255,77,.24);color:#e6edf7}
+.net stop:first-child{stop-color:var(--primary)}.net stop:last-child{stop-color:var(--violet)}.net g[fill]{fill:var(--primary)}
+.cube i{border-color:rgba(92,225,255,.48);background:linear-gradient(135deg,rgba(200,255,77,.11),rgba(92,225,255,.08));box-shadow:inset 0 0 32px rgba(92,225,255,.1)}
+.gp{border-color:rgba(148,175,220,.2);background:rgba(8,14,22,.82);color:#e6edf7;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
+.gp b{background:var(--primary);box-shadow:0 0 10px var(--primary)}.pt{background:var(--violet);box-shadow:0 0 10px var(--violet)}
+.card{background:var(--surface);border-color:var(--line);box-shadow:var(--shadow)}
+.card:has(.card-actions):hover{border-color:color-mix(in srgb,var(--primary) 42%,var(--line));box-shadow:0 18px 40px -24px rgba(0,0,0,.8),0 0 0 1px color-mix(in srgb,var(--primary) 12%,transparent)}
+.card::before{background:radial-gradient(240px circle at var(--gx,50%) var(--gy,0%),var(--primary-soft),transparent 72%)}
+.stat .num{background:linear-gradient(180deg,var(--text),var(--muted));-webkit-background-clip:text;background-clip:text;color:transparent}
+.btn.primary,[data-theme] .btn.primary{background:linear-gradient(110deg,var(--primary),var(--violet));color:#07100a;box-shadow:0 8px 22px -13px var(--primary),inset 0 1px 0 rgba(255,255,255,.38)}
+.btn.primary:hover:not(:disabled){filter:brightness(1.07)}
+a.btn{text-decoration:none}
+.tag{border:1px solid var(--line);border-radius:7px;background:var(--surface-2);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px;letter-spacing:.025em}
+.tag.open{color:var(--success)}
+.section-title h2::after{background:linear-gradient(90deg,var(--primary),var(--violet))}
+.form input,.form textarea,.form select,.searchrow input,.searchrow select{background:var(--surface-2);border-color:var(--line)}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline-color:var(--primary);box-shadow:0 0 0 3px var(--focus)}
+.modal{background:rgba(2,5,9,.78)}.modalbox{background:var(--surface-hover);border-color:color-mix(in srgb,var(--primary) 18%,var(--line))}
+.toast{background:linear-gradient(110deg,#111a29,#0a111a);border:1px solid color-mix(in srgb,var(--primary) 32%,var(--line));color:var(--text)}
+footer{background:linear-gradient(135deg,#0a1019,#0b1520)!important;border:1px solid var(--line);color:var(--muted)}footer strong{color:var(--primary)}
+[data-theme="light"] footer{background:linear-gradient(135deg,#e8f0e4,#e8f4f2)!important;color:var(--text)}
+.ambient-motion{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;contain:paint}
+.ambient-motion::before,.ambient-motion::after{content:"";position:absolute;pointer-events:none}
+.ambient-motion::before{top:-160px;left:0;right:0;height:160px;background:linear-gradient(to bottom,transparent,rgba(200,255,77,.04),rgba(92,225,255,.022),transparent);animation:ambient-scan 22s linear infinite}
+.ambient-motion::after{inset:-18%;opacity:.72;background:radial-gradient(42rem 30rem at 14% 32%,rgba(92,225,255,.06),transparent 72%),radial-gradient(38rem 30rem at 86% 74%,rgba(200,255,77,.05),transparent 72%);animation:ambient-drift 30s ease-in-out infinite alternate}
+@keyframes ambient-scan{to{transform:translateY(calc(100vh + 320px))}}
+@keyframes ambient-drift{from{transform:translate3d(-1.5%,0,0) scale(.98)}to{transform:translate3d(1.5%,1%,0) scale(1.03)}}
+[data-theme="light"] .ambient-motion::before{background:linear-gradient(to bottom,transparent,rgba(66,107,8,.035),rgba(8,124,145,.025),transparent)}
+[data-theme="light"] .ambient-motion::after{opacity:.5;background:radial-gradient(42rem 30rem at 14% 32%,rgba(8,124,145,.06),transparent 72%),radial-gradient(38rem 30rem at 86% 74%,rgba(91,139,26,.055),transparent 72%)}
+@media(max-width:900px){.hero.hero-3d{gap:4px}.hero-stage{height:270px}}
+@media(max-width:700px){.hero.hero-3d{min-height:0}.hero-stage{height:210px}.gp{background:rgba(8,14,22,.92)}}
+@media(max-width:700px){.ambient-motion::before{animation-duration:28s}.ambient-motion::after{opacity:.4}}
+@media(prefers-reduced-motion:reduce){body::before,.ambient-motion::before,.ambient-motion::after{animation:none!important}.ambient-motion::before{display:none}}
+/* Keep page changes and reveal effects light so scrolling stays fluid. */
+:root{--ease:cubic-bezier(.22,1,.36,1)}
+html{scroll-behavior:smooth;scroll-padding-top:var(--topbar-height)}
+.page.active{animation:page-enter .4s var(--ease) both}
+.page.active .grid:not(#eventGrid):not(.three)>*{animation:rise .34s var(--ease) backwards;animation-delay:calc(var(--i,0)*18ms)}
+.page.active .step{animation:rise .34s var(--ease) backwards;animation-delay:calc(var(--k,0)*45ms + 80ms)}
+.rv{filter:none;transition:opacity .48s var(--ease),transform .48s var(--ease)}
+.topbar{animation-duration:.42s}
+.side button{animation-duration:.34s;animation-delay:calc(var(--n,0)*22ms + 70ms)}
+.sidebar{transition:transform .32s var(--ease)}
+.card,.btn,.icon-button,.nav button,.side button,.userbox{transition-timing-function:var(--ease)}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.page.active,.page.active .grid:not(#eventGrid):not(.three)>*{animation:none!important}.rv{opacity:1!important;filter:none!important;transform:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="ambient-motion" aria-hidden="true"></div>
+<header class="topbar">
+  <button class="icon-button mobile" aria-label="Open navigation" aria-expanded="false" onclick="toggleSide()">☰</button>
+  <div class="brand"><div class="logo">E</div><span>ELECTICORE</span></div>
+  <nav class="nav">
+    <button data-page="home">Home</button><button data-page="elections">Elections</button><button data-page="safety">Anti-Ragging</button><button data-page="faculty">Faculty</button><button data-page="events">Events</button><button data-page="notes">Notes</button>
+  </nav>
+  <div class="top-actions"><button class="icon-button" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch theme" onclick="toggleTheme()">◐</button><button class="userbox" style="border:0;background:transparent" onclick="showProfileSettings()"><span class="name" id="userName">Sign in</span><div class="avatar" id="userAvatar">?</div></button></div>
+</header>
+
+<div class="drawer-scrim" id="drawerScrim" onclick="toggleSide(false)"></div>
+<div class="app">
+<aside class="sidebar" id="sidebar">
+  <div class="side-title">Student Portal</div>
+  <div class="side">
+    <button data-page="home">⌂ &nbsp; Dashboard</button>
+    <button data-page="elections">🗳️ &nbsp; Elections</button>
+    <button data-page="safety">🚨 &nbsp; Anti-Ragging</button>
+    <button data-page="faculty">👨‍🏫 &nbsp; Faculty Directory</button>
+    <button data-page="events">📢 &nbsp; Events</button>
+    <button data-page="notes">📚 &nbsp; Notes</button>
+    <button data-page="notifications">🔔 &nbsp; Notifications <span class="tag" id="notificationBadge" style="float:right;display:none">0</span></button>
+  </div>
+  <div class="side-title" id="adminTitle" style="display:none">Administration</div>
+  <div class="side" id="adminArea" style="display:none">
+    <button data-page="admin">🛠️ &nbsp; Admin Dashboard</button>
+  </div>
+  <div class="side-title">Account</div>
+  <div class="side">
+    <button onclick="showProfileSettings()">⚙️ &nbsp; Settings</button>
+    <button onclick="logout()">↪ &nbsp; Logout</button>
+  </div>
+  <small>Smart, safe and connected campus platform.</small>
+</aside>
+
+<main>
+<section id="home" class="page active">
+  <div class="hero hero-3d">
+    <div class="hero-copy">
+      <div class="eyebrow">AI-Enabled Smart Student Management Portal</div>
+      <h1>Building a smarter,<br>safer campus.</h1>
+      <p>ELECTICORE brings secure student elections, confidential safety reporting, faculty guidance, academic resources and campus events into one connected experience.</p>
+      <div class="actions"><button class="btn primary" onclick="showPage('elections')">Cast Your Vote →</button><button class="btn secondary" onclick="showPage('safety')">Report Ragging</button></div>
+    </div>
+    <div class="hero-stage" aria-hidden="true"><span class="pt" style="left:4%;top:10%;animation-delay:-0.0s;--s:3px"></span><span class="pt" style="left:41%;top:63%;animation-delay:-1.3s;--s:4px"></span><span class="pt" style="left:78%;top:36%;animation-delay:-2.6s;--s:5px"></span><span class="pt" style="left:23%;top:89%;animation-delay:-3.9s;--s:3px"></span><span class="pt" style="left:60%;top:62%;animation-delay:-5.2s;--s:4px"></span><span class="pt" style="left:5%;top:35%;animation-delay:-6.5s;--s:5px"></span><span class="pt" style="left:42%;top:88%;animation-delay:-7.8s;--s:3px"></span><span class="pt" style="left:79%;top:61%;animation-delay:-9.1s;--s:4px"></span><span class="pt" style="left:24%;top:34%;animation-delay:-10.4s;--s:5px"></span><span class="pt" style="left:61%;top:87%;animation-delay:-11.7s;--s:3px"></span><span class="pt" style="left:6%;top:60%;animation-delay:-13.0s;--s:4px"></span><span class="pt" style="left:43%;top:33%;animation-delay:-14.3s;--s:5px"></span>
+      <div class="stage-in">
+        <svg class="net" viewBox="0 0 400 360" fill="none"><g stroke="url(#lg)" stroke-width="1.2"><path d="M200 180 70 70M200 180 340 80M200 180 60 280M200 180 345 290M70 70 340 80M60 280 345 290"/></g><defs><linearGradient id="lg" x1="0" x2="1"><stop stop-color="#6f9bff"/><stop offset="1" stop-color="#a28bff"/></linearGradient></defs><g fill="#8fb0ff"><circle cx="70" cy="70" r="4"/><circle cx="340" cy="80" r="4"/><circle cx="60" cy="280" r="4"/><circle cx="345" cy="290" r="4"/></g></svg>
+        <div class="cube"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        <div class="gp g1" style="--z:70px;--d:16"><b></b>Secure voting</div>
+        <div class="gp g2" style="--z:40px;--d:-12"><b></b>Confidential reports</div>
+        <div class="gp g3" style="--z:90px;--d:20"><b></b>Campus events</div>
+      </div>
+    </div>
+  </div>
+  <div class="grid stats">
+    <div class="card stat"><div><span class="muted">Open Elections</span><div class="num" id="statActiveElections">—</div></div><div class="icon">🗳️</div></div>
+    <div class="card stat"><div><span class="muted">Campus Events</span><div class="num" id="statEvents">—</div></div><div class="icon">📢</div></div>
+    <div class="card stat"><div><span class="muted">Faculty Listed</span><div class="num" id="statFaculty">—</div></div><div class="icon">👨‍🏫</div></div>
+    <div class="card stat"><div><span class="muted">Your Reports</span><div class="num" id="statSafety">—</div></div><div class="icon">🛡️</div></div>
+  </div>
+  <div class="section-title"><div><h2>Quick Actions</h2><p>Access the services you need most.</p></div></div>
+  <div class="grid four" style="grid-template-columns:repeat(4,1fr)">
+    <div class="card"><div class="icon">🗳️</div><h3>Cast Your Vote</h3><p class="muted">Vote securely in your active class or student council election.</p><button class="btn ghost" onclick="showPage('elections')">Open Elections</button></div>
+    <div class="card"><div class="icon">🚨</div><h3>Report Ragging</h3><p class="muted">Submit a confidential complaint and get AI-assisted support.</p><button class="btn ghost" onclick="showPage('safety')">Report Safely</button></div>
+    <div class="card"><div class="icon">👨‍🏫</div><h3>Find Faculty</h3><p class="muted">Search faculty by name, department or subject.</p><button class="btn ghost" onclick="showPage('faculty')">Browse Faculty</button></div>
+    <div class="card"><div class="icon">📅</div><h3>Explore Events</h3><p class="muted">Discover hackathons, workshops, clubs and seminars.</p><button class="btn ghost" onclick="showPage('events')">View Events</button></div>
+  </div>
+  <div class="section-title"><div><h2>Recent Activity</h2><p>Your latest portal activity.</p></div></div>
+  <div class="grid two" id="recentActivity"><div class="card"><p class="muted">Sign in to see current elections and activity.</p></div><div class="card"><p class="muted">Campus events will appear here when published.</p></div></div>
+</section>
+
+<section id="elections" class="page">
+  <div class="section-title"><div><h2>Online Elections</h2><p>Secure, one-person-one-vote elections managed by your campus.</p></div><span class="tag" id="electionCount">Sign in to view</span></div>
+  <div class="notice">Secure voting is available to signed-in campus accounts while an election is open. Results appear here after an administrator publishes them.</div>
+  <div class="grid two" id="electionGrid" style="margin-top:16px">
+    <div class="notice">Sign in to load current elections from the campus portal.</div>
+  </div>
+  <div class="section-title"><div><h2>Published Results</h2><p>Verified totals from closed elections.</p></div></div>
+  <div class="grid two" id="publishedResults"><div class="card"><p class="muted">No results have been published yet.</p></div></div>
+</section>
+
+<section id="safety" class="page">
+  <div class="hero" style="background:linear-gradient(135deg,#111827,#14532d 65%,#166534);padding:32px">
+    <div class="eyebrow">Confidential Safety Channel</div><h1 style="font-size:34px">Report Ragging. Stay Safe.</h1>
+    <p>Your safety matters. Submit a confidential report and let ELECTICORE assist in routing it to the appropriate authority.</p>
+    <div class="actions"><span class="tag" style="background:#dcfce7;color:#166534">🔒 Confidential</span><span class="tag" style="background:#ede9fe;color:#5b21b6">Assisted drafting</span><span class="tag" style="background:#ffedd5;color:#9a3412">Committee review</span></div>
+  </div>
+  <div class="grid two" style="margin-top:18px">
+    <div class="card"><h2>Submit a Confidential Report</h2><div class="notice warning"><strong>Immediate danger?</strong> Contact campus security or local emergency services now. This portal does not replace emergency support.</div><div class="notice safe" style="margin-top:10px">Your report is linked to your signed-in account so you can track its status. Only authorized reviewers can access it. This channel is confidential, not anonymous.</div>
+      <form class="form" style="margin-top:16px" onsubmit="submitReport(event)">
+        <div><label for="incident">Incident description *</label><textarea id="incident" required minlength="10" maxlength="10000" placeholder="Describe what happened. Include only information you are comfortable sharing."></textarea></div>
+        <div class="grid two"><div><label for="reportDate">Incident date</label><input id="reportDate" type="date"></div><div><label for="reportTime">Approximate time</label><input id="reportTime" type="time"></div></div>
+        <div><label for="reportLocation">Location</label><input id="reportLocation" maxlength="200" placeholder="e.g. Hostel Block B"></div>
+        <div><label for="peopleInvolved">People involved</label><input id="peopleInvolved" maxlength="2000" placeholder="Names or descriptions, if known"></div>
+        <div><label for="additionalDetails">Additional details</label><textarea id="additionalDetails" maxlength="10000" placeholder="Anything else that may help the committee..."></textarea></div>
+        <div class="notice">The incident description and location are sent to the institution-configured OpenAI service only if you opt in below. The date, time, people involved, and additional details stay out of the AI request. Leave this unchecked to use the built-in local email template.</div>
+        <label style="display:flex;gap:9px;align-items:flex-start"><input id="aiDraftConsent" type="checkbox" style="width:auto;margin-top:4px"><span>Allow OpenAI to draft the committee email and provide a preliminary low, moderate, or extreme urgency estimate using only my incident description and location.</span></label>
+        <div class="notice warning">The AI estimate is only a guide for human review. If anyone is in immediate danger, contact campus security or local emergency services now; do not wait for this portal.</div>
+        <button class="btn primary" type="submit">Submit Confidential Report</button>
+      </form>
+    </div>
+    <div class="card"><h2>How the Report Process Works</h2>
+      <div class="timeline">
+        <div class="step done"><div class="dot">✓</div><div><strong>Complaint</strong><div class="muted">Your report is securely submitted.</div></div></div>
+        <div class="step done"><div class="dot">✓</div><div><strong>Email Draft Prepared</strong><div class="muted">A factual committee email is prepared using your report.</div></div></div>
+        <div class="step current"><div class="dot">3</div><div><strong>Faculty Alert</strong><div class="muted">The concerned faculty/committee receives the report.</div></div></div>
+      </div>
+      <button class="btn secondary" onclick="openStatus()">View My Report Status</button>
+    </div>
+  </div>
+</section>
+
+<section id="faculty" class="page">
+  <div class="section-title"><div><h2>👨‍🏫 Faculty Directory</h2><p>96 faculty across 7 departments. Data sourced from <a href="https://www.abesit.in/faculty/" target="_blank">abesit.in/faculty</a> — click any card to view their full official profile and photo.</p></div></div>
+  <div class="searchrow"><input id="facultySearch" oninput="filterFaculty()" placeholder="Search by faculty name, designation or department..."><select id="dept" onchange="filterFaculty()"><option value="">All Departments</option></select></div>
+  <div id="facultyGrid"></div>
+</section>
+
+<section id="events" class="page">
+  <div class="section-title"><div><h2>📢 Campus Events</h2><p>Find hackathons, clubs, workshops, seminars and campus announcements.</p></div></div>
+  <div class="searchrow"><input id="eventSearch" oninput="filterEvents()" placeholder="Search events, clubs, workshops..."><select id="eventType" onchange="filterEvents()"><option value="">All Categories</option><option>Hackathon</option><option>Workshop</option><option>Club</option><option>Seminar</option><option>Event</option></select></div>
+  <div class="grid two" id="eventGrid"></div>
+</section>
+
+<section id="notes" class="page">
+  <div class="section-title"><div><h2>📚 Study Notes & Resources</h2><p>Browse and download subject-wise material shared by verified campus users.</p></div><button class="btn secondary" onclick="showUploadResource()">Upload notes</button></div>
+  <div class="grid two" id="resourceGrid"><div class="card"><p class="muted">Loading study resources…</p></div></div>
+</section>
+
+<section id="notifications" class="page">
+  <div class="section-title"><div><h2>Notifications</h2><p>Updates sent to your campus account.</p></div><button class="btn secondary" onclick="markAllNotificationsRead()">Mark all as read</button></div>
+  <div class="grid" id="notificationList"><div class="card"><p class="muted">Sign in to view your notifications.</p></div></div>
+</section>
+
+<section id="admin" class="page">
+  <div class="section-title"><div><h2>Admin Dashboard</h2><p>Manage campus elections, publish verified results, review reports, and post events.</p></div></div>
+  <div class="grid two">
+    <div class="card">
+      <h3>Create an election</h3>
+      <form class="form" style="margin-top:16px" onsubmit="createElectionFromDashboard(event)">
+        <div><label>Election title *</label><input id="adminElectionTitle" required maxlength="150" placeholder="e.g. Class Representative Election"></div>
+        <div><label>Description</label><textarea id="adminElectionDescription" placeholder="Who is eligible and what is this election for?"></textarea></div>
+        <div class="grid two"><div><label>Voting opens *</label><input id="adminElectionStart" type="datetime-local" required></div><div><label>Voting closes *</label><input id="adminElectionEnd" type="datetime-local" required></div></div>
+        <div><label>Select candidates *</label><select id="adminCandidates" multiple size="9" required></select><p class="muted" style="font-size:13px">Hold Ctrl (or Cmd on Mac) to select more than one student. Choose at least two.</p></div>
+        <button class="btn primary" type="submit">Publish Election</button>
+      </form>
+    </div>
+    <div class="card">
+      <h3>How it works</h3>
+      <div class="timeline"><div class="step done"><div class="dot">1</div><div><strong>Select students</strong><div class="muted">Only registered students appear in the candidate list.</div></div></div><div class="step done"><div class="dot">2</div><div><strong>Set voting period</strong><div class="muted">The portal automatically opens and closes voting at those times.</div></div></div><div class="step current"><div class="dot">3</div><div><strong>Publish</strong><div class="muted">Students see candidate names and can cast one secure vote.</div></div></div></div>
+      <div class="notice">Candidate selection is controlled by the admin. Other student accounts are never exposed to voters unless selected as candidates.</div>
+    </div>
+  </div>
+  <div class="card" style="margin-top:16px"><div class="section-title" style="margin:0 0 12px"><div><h3>Election results</h3><p>Review closed election tallies and publish the official results for students.</p></div></div><div id="adminElectionResults" class="grid"></div></div>
+  <div class="card" style="margin-top:16px"><h3>Anti-Ragging Reports</h3><p class="muted">Confidential reports, delivery status, and case progress.</p><div id="adminReportList" class="grid" style="margin-top:14px"></div></div>
+  <div class="card" style="margin-top:16px"><h3>Send a student notification</h3><p class="muted">Send a direct campus update to one registered student.</p><form class="form" style="margin-top:14px" onsubmit="sendStudentNotification(event)"><div><label for="notificationStudent">Student *</label><select id="notificationStudent" required></select></div><div><label for="notificationTitle">Title *</label><input id="notificationTitle" maxlength="150" required placeholder="e.g. Election results published"></div><div><label for="notificationMessage">Message *</label><textarea id="notificationMessage" maxlength="2000" required placeholder="Write a concise campus update."></textarea></div><button class="btn primary" type="submit">Send notification</button></form></div>
+  <div class="card" style="margin-top:16px"><h3>Publish a campus event</h3><p class="muted">Post a verified workshop, club activity, seminar or hackathon for students.</p><form class="form" style="margin-top:16px" onsubmit="createEventFromDashboard(event)"><div class="grid two"><div><label>Event name *</label><input id="adminEventName" required maxlength="150" placeholder="e.g. Web Development Workshop"></div><div><label>Category *</label><select id="adminEventType"><option>Workshop</option><option>Hackathon</option><option>Club</option><option>Seminar</option><option>Event</option></select></div></div><div class="grid two"><div><label>Start date and time *</label><input id="adminEventStarts" type="datetime-local" required></div><div><label>Venue</label><input id="adminEventVenue" maxlength="150" placeholder="e.g. Seminar Hall"></div></div><div><label>Description</label><textarea id="adminEventDescription" maxlength="1000" placeholder="Explain what students can expect."></textarea></div><button class="btn primary" type="submit">Publish event</button></form></div>
+</section>
+
+<footer><strong>ELECTICORE</strong><p>Building a Smarter, Safer, and More Connected Campus.</p><span>© 2026 ELECTICORE • Elections • Anti-Ragging • Faculty • Events • Notes</span></footer>
+</main>
+</div>
+
+<div class="modal" id="modal"><div class="modalbox" id="modalContent"></div></div>
+<div class="toast" id="toast"></div>
+
+<script>
+const deptNames={"CSE":"Computer Science & Engineering","IT":"Information Technology","CSE-DS":"CSE (Data Science)","CSE-AI":"CSE (Artificial Intelligence)","ASH":"Applied Sciences & Humanities","BBA":"BBA","BCA":"BCA"};
+const faculty=[
+{name:"Pratibha Sharma",role:"Assistant Professor",dept:"CSE",slug:"pratibha-sharma",initials:"PS"},
+{name:"Prabhat Raghav",role:"Assistant Professor",dept:"CSE",slug:"prabhat-raghav",initials:"PR"},
+{name:"Sunita Kumari",role:"Assistant Professor",dept:"CSE",slug:"sunita-kumari",initials:"SK"},
+{name:"Pradeep Kumar Kaushik",role:"Assistant Professor",dept:"CSE",slug:"pradeep-kumar-kaushik",initials:"PK"},
+{name:"Preeti Goyal",role:"Assistant Professor",dept:"CSE",slug:"preeti-goyal",initials:"PG"},
+{name:"Monika Gaur",role:"Assistant Professor",dept:"CSE",slug:"monika-gaur",initials:"MG"},
+{name:"Devendra Vikram",role:"Assistant Professor",dept:"CSE",slug:"devendra-vikram",initials:"DV"},
+{name:"Dr. Hoshiyar Singh Kanyal",role:"Professor & HOD",dept:"CSE",slug:"hoshiyar-singh-kanyal",initials:"DK"},
+{name:"Swati Joshi",role:"Assistant Professor",dept:"CSE",slug:"swati-joshi",initials:"SJ"},
+{name:"Satyendra Singh",role:"Assistant Professor",dept:"CSE",slug:"satyendra-singh",initials:"SS"},
+{name:"Manish Kumar",role:"Assistant Professor",dept:"CSE",slug:"manish-kumar",initials:"MK"},
+{name:"Sakshi Malik",role:"Assistant Professor",dept:"CSE",slug:"sakshi-malik",initials:"SM"},
+{name:"Shalu Mall",role:"Assistant Professor",dept:"CSE",slug:"shalu-mall",initials:"SM"},
+{name:"Dr. Sandeep Kumar",role:"Associate Professor",dept:"CSE",slug:"sandeep-kumar-2",initials:"DK"},
+{name:"Dr. Laxman Singh",role:"Associate Professor",dept:"CSE",slug:"laxman-singh",initials:"DS"},
+{name:"Dr. Rizwan Khan",role:"Professor & Dean, Emergent Technologies & Training",dept:"CSE",slug:"rizwan-khan",initials:"DK"},
+{name:"Krishan Bihari Dubey",role:"Assistant Professor",dept:"CSE",slug:"krishan-bihari-dubey",initials:"KD"},
+{name:"Priyanka Gupta",role:"Assistant Professor",dept:"CSE",slug:"priyanka-gupta",initials:"PG"},
+{name:"Avdhesh Kumar Tiwari",role:"Assistant Professor",dept:"CSE",slug:"avdhesh-kumar-tiwari",initials:"AT"},
+{name:"Jyoti Raj Singh",role:"Assistant Professor",dept:"IT",slug:"jyoti-raj-singh",initials:"JS"},
+{name:"Ram Pal Singh",role:"Assistant Professor",dept:"IT",slug:"ram-pal-singh",initials:"RS"},
+{name:"Anuj Kumar",role:"Assistant Professor",dept:"IT",slug:"anuj-kumar-2",initials:"AK"},
+{name:"Dr. Ashish Kumar Mourya",role:"Associate Professor",dept:"IT",slug:"dr-ashish-kumar-mourya",initials:"DM"},
+{name:"Vijendra Rai",role:"Assistant Professor",dept:"IT",slug:"vijendra-rai",initials:"VR"},
+{name:"Reshu Tyagi",role:"Assistant Professor",dept:"IT",slug:"reshu-tyagi",initials:"RT"},
+{name:"Shivani Sharma",role:"Assistant Professor",dept:"IT",slug:"shivani-sharma",initials:"SS"},
+{name:"Deepti Singh",role:"Assistant Professor",dept:"IT",slug:"deepti-singh",initials:"DS"},
+{name:"Nagendra Nath Dubey",role:"Assistant Professor",dept:"IT",slug:"nagendra-nath-dubey",initials:"ND"},
+{name:"Dr. Kaushal Kishor",role:"Professor",dept:"IT",slug:"kaushal-kishor",initials:"DK"},
+{name:"Sumit Kumar",role:"Associate Professor & HOD",dept:"IT",slug:"sumit-kumar",initials:"SK"},
+{name:"Stuti Nagar",role:"Assistant Professor",dept:"CSE-DS",slug:"stuti-nagar",initials:"SN"},
+{name:"Raj Kishor Verma",role:"Assistant Professor",dept:"CSE-DS",slug:"raj-kishor-verma",initials:"RV"},
+{name:"Dr. Kanika Taneja",role:"Professor",dept:"CSE-DS",slug:"kanika-taneja",initials:"DT"},
+{name:"Renuka Singh",role:"Assistant Professor",dept:"CSE-DS",slug:"renuka-singh",initials:"RS"},
+{name:"Akanksha Bana",role:"Assistant Professor",dept:"CSE-DS",slug:"akanksha-bana",initials:"AB"},
+{name:"Neha Varshney",role:"Assistant Professor",dept:"CSE-DS",slug:"neha-varshney",initials:"NV"},
+{name:"Manu",role:"Assistant Professor",dept:"CSE-DS",slug:"manu",initials:"MA"},
+{name:"Kanchan Dipu",role:"Assistant Professor",dept:"CSE-AI",slug:"kanchan-dipu",initials:"KD"},
+{name:"Dr. Tapan Kant",role:"Associate Professor",dept:"CSE-AI",slug:"dr-tapan-kant",initials:"DK"},
+{name:"Vijay",role:"Assistant Professor",dept:"CSE-AI",slug:"vijay",initials:"VI"},
+{name:"Medhavi Bhardwaj",role:"Assistant Professor",dept:"CSE-AI",slug:"medhavi-bhardwaj",initials:"MB"},
+{name:"Nigmendra Pratap Yadav",role:"Assistant Professor",dept:"CSE-AI",slug:"nigmendra-pratap-yadav",initials:"NY"},
+{name:"Vinita",role:"Assistant Professor",dept:"CSE-AI",slug:"vinita",initials:"VI"},
+{name:"Abha Sharma",role:"Assistant Professor",dept:"CSE-AI",slug:"abha-sharma",initials:"AS"},
+{name:"Varsha Srivastava",role:"Assistant Professor",dept:"CSE-AI",slug:"varsha-srivastava",initials:"VS"},
+{name:"Meena Kumari",role:"Assistant Professor",dept:"CSE-AI",slug:"meena-kumari",initials:"MK"},
+{name:"Sadhana Singh",role:"Assistant Professor",dept:"CSE-AI",slug:"sadhana-singh",initials:"SS"},
+{name:"Dr. Sanjeev Kumar",role:"Professor & HOD",dept:"CSE-AI",slug:"sanjeev-kumar-2",initials:"DK"},
+{name:"Pragya Pandey",role:"Assistant Professor",dept:"CSE-AI",slug:"pragya-pandey",initials:"PP"},
+{name:"Khushboo Saxena",role:"Assistant Professor",dept:"CSE-AI",slug:"khushboo-saxena",initials:"KS"},
+{name:"Gopal Gupta",role:"Assistant Professor",dept:"CSE-AI",slug:"gopal-gupta",initials:"GG"},
+{name:"Priyanka Sharma",role:"Assistant Professor",dept:"CSE-AI",slug:"priyanka-sharma",initials:"PS"},
+{name:"Dr. Vineet Kumar Singh",role:"Assistant Professor",dept:"CSE-AI",slug:"vineet-kumar-singh",initials:"DS"},
+{name:"Dr. Mitul Sarkar",role:"Associate Professor",dept:"ASH",slug:"mitul-sarkar",initials:"DS"},
+{name:"Dr. Dinesh Kumar Sharma",role:"Professor",dept:"ASH",slug:"dinesh-kumar-sharma",initials:"DS"},
+{name:"Dr. Urvashi Chaudhary",role:"Associate Professor",dept:"ASH",slug:"urvashi-chaudhary",initials:"DC"},
+{name:"Khushboo Arora",role:"Assistant Professor",dept:"ASH",slug:"khushboo-arora",initials:"KA"},
+{name:"Preeti Singh",role:"Assistant Professor",dept:"ASH",slug:"preeti-singh",initials:"PS"},
+{name:"Dr. Satish Teotia",role:"Assistant Professor",dept:"ASH",slug:"satish-teotia",initials:"DT"},
+{name:"Dr. Shradha Gupta",role:"Assistant Professor",dept:"ASH",slug:"shradha-gupta",initials:"DG"},
+{name:"Anuj Kumar Saini",role:"Assistant Professor (Chemistry)",dept:"ASH",slug:"anuj-kumar-saini",initials:"AS"},
+{name:"Dr. Amita Dwivedi",role:"Assistant Professor",dept:"ASH",slug:"amita-dwivedi",initials:"DD"},
+{name:"Dr. Subodh Kumar Sharma",role:"Professor & Dean, Outreach & Research",dept:"ASH",slug:"subodh-kumar",initials:"DS"},
+{name:"Dr. Sachin Rana",role:"Associate Professor",dept:"ASH",slug:"sachin-rana-2",initials:"DR"},
+{name:"Rachit Patel",role:"Assistant Professor",dept:"ASH",slug:"rachit-patel",initials:"RP"},
+{name:"Suneel Kumar Agrawal",role:"Assistant Professor",dept:"ASH",slug:"suneel-kr-agrawal",initials:"SA"},
+{name:"Anamika Sharma",role:"Assistant Professor",dept:"ASH",slug:"anamika-sharma",initials:"AS"},
+{name:"Sandeep Kumar",role:"Assistant Professor",dept:"ASH",slug:"sandeep-kumar",initials:"SK"},
+{name:"Dr. Satish Chand Gupta",role:"Assistant Professor",dept:"ASH",slug:"satish-chand-gupta",initials:"DG"},
+{name:"Kalyan Pal",role:"Assistant Professor",dept:"ASH",slug:"kalyan-pal",initials:"KP"},
+{name:"Dr. Varuna Bhardwaj",role:"Assistant Professor",dept:"ASH",slug:"varuna-bhardwaj",initials:"DB"},
+{name:"Dr. Vaishali Tyagi",role:"Assistant Professor",dept:"ASH",slug:"vaishali-tyagi",initials:"DT"},
+{name:"Dr. Sunil Kumar Arya",role:"Professor & Dean, Student Welfare",dept:"ASH",slug:"sunil-kumar-arya",initials:"DA"},
+{name:"Renu Saluja",role:"Assistant Professor",dept:"ASH",slug:"renu-saluja",initials:"RS"},
+{name:"Dr. Rajeev Rajput",role:"Assistant Professor",dept:"ASH",slug:"rajeev-rajput",initials:"DR"},
+{name:"Kaushal Gupta",role:"Coordinator, UHV Cell",dept:"ASH",slug:"kaushal-gupta",initials:"KG"},
+{name:"Dr. Anuj Kumar Tyagi",role:"Assistant Professor",dept:"ASH",slug:"anuj-kumar-tyagi",initials:"DT"},
+{name:"Archana Srivastava",role:"Assistant Professor",dept:"ASH",slug:"archana-srivastava",initials:"AS"},
+{name:"Sheetal Chandra",role:"Assistant Professor (English)",dept:"ASH",slug:"sheetal-chandra",initials:"SC"},
+{name:"Dr. Aakansha Garg",role:"Associate Professor",dept:"ASH",slug:"aakansha-garg",initials:"DG"},
+{name:"Dr. Anuj Kumar",role:"Assistant Professor",dept:"ASH",slug:"anuj-kumar",initials:"DK"},
+{name:"Dr. Anchala",role:"Assistant Professor",dept:"ASH",slug:"anchala",initials:"DA"},
+{name:"Dr. Dolly Sharma",role:"Associate Professor",dept:"ASH",slug:"dolly-sharma",initials:"DS"},
+{name:"Dr. Ratna Singh",role:"Associate Professor",dept:"ASH",slug:"ratna-singh",initials:"DS"},
+{name:"Dr. Anjali Saxena",role:"Associate Professor",dept:"ASH",slug:"anjali-saxena",initials:"DS"},
+{name:"Dr. Nisha Singh",role:"Associate Professor",dept:"ASH",slug:"nisha-singh",initials:"DS"},
+{name:"Avinash Chandra Trivedi",role:"Associate Professor",dept:"ASH",slug:"avinash-chandra-trivedi",initials:"AT"},
+{name:"Vijay Kumar",role:"Assistant Professor",dept:"ASH",slug:"vijay-kumar",initials:"VK"},
+{name:"Dr. Amit Kumar Vats",role:"Professor & Dean, First Year",dept:"ASH",slug:"amit-kumar-vats",initials:"DV"},
+{name:"Sugandh Gupta",role:"Assistant Professor",dept:"ASH",slug:"sugandh-gupta",initials:"SG"},
+{name:"Dr. Surendra Prabhat Gupta",role:"Professor & Dean, Academics",dept:"ASH",slug:"surendra-prabhat-gupta",initials:"DG"},
+{name:"Isha Sharma",role:"Assistant Professor",dept:"BBA",slug:"isha-sharma",initials:"IS"},
+{name:"Archana Sharma",role:"Assistant Professor",dept:"BBA",slug:"archana-sharma-2",initials:"AS"},
+{name:"Himanshu Kumar",role:"Assistant Professor",dept:"BBA",slug:"16912-2",initials:"HK"},
+{name:"Amrita Singh",role:"Assistant Professor",dept:"BCA",slug:"amrita-singh",initials:"AS"},
+{name:"Shobhit Sharma",role:"Assistant Professor",dept:"BCA",slug:"shobhit-sharma",initials:"SS"}];
+const events=[
+{name:"AI & Innovation Hackathon",type:"Hackathon",date:"20 Sept 2026",place:"Innovation Lab",icon:"💻",desc:"Build practical AI solutions with students across the institute."},
+{name:"Web Development Workshop",type:"Workshop",date:"24 Sept 2026",place:"Seminar Hall",icon:"🌐",desc:"Hands-on workshop covering modern web development."},
+{name:"Coding Club Orientation",type:"Club",date:"27 Sept 2026",place:"CSE Block",icon:"👥",desc:"Meet the coding club, mentors and upcoming activities."},
+{name:"Cyber Safety Seminar",type:"Seminar",date:"30 Sept 2026",place:"Auditorium",icon:"🛡️",desc:"Learn practical cybersecurity and responsible digital habits."},
+{name:"Data Structures Notes",type:"Notes",date:"Updated today",place:"Academic Resources",icon:"📚",desc:"Unit-wise study material and revision resources."},
+{name:"Innovation & Startup Workshop",type:"Workshop",date:"4 Oct 2026",place:"Incubation Centre",icon:"🚀",desc:"Turn student ideas into practical prototypes."}];
+
+function showPage(id){const page=document.getElementById(id);if(!page)return;document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));page.classList.add('active');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'});toggleSide(false)}
+document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
+function toggleSide(force){const sidebar=document.getElementById('sidebar'),scrim=document.getElementById('drawerScrim'),button=document.querySelector('.topbar .mobile'),open=typeof force==='boolean'?force:!sidebar.classList.contains('open');sidebar.classList.toggle('open',open);scrim.classList.toggle('show',open);button.setAttribute('aria-expanded',String(open))}
+function applyTheme(theme){document.documentElement.dataset.theme=theme;const button=document.getElementById('themeToggle');if(button){button.textContent=theme==='dark'?'☼':'◐';button.setAttribute('aria-label',theme==='dark'?'Switch to light mode':'Switch to dark mode');button.title=theme==='dark'?'Switch to light mode':'Switch to dark mode'}}
+function toggleTheme(){const next=document.documentElement.dataset.theme==='dark'?'light':'dark';localStorage.setItem('electicore_theme',next);applyTheme(next)}
+applyTheme(localStorage.getItem('electicore_theme')|| (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
+function openModal(content){document.getElementById('modalContent').innerHTML=content;document.getElementById('modal').classList.add('show')}
+function closeModal(){document.getElementById('modal').classList.remove('show')}
+document.getElementById('modal').addEventListener('click',e=>{if(e.target.id==='modal')closeModal()});
+
+const elections={
+'2CSA':{title:'Class Representative Election',sub:'Section 2CSA • 2nd Year CSE',candidates:['Aditya Pal','Abhinay Pratap Singh','Alok Kumar','Anshika Singh','Aarush Verma']},
+'2CSB':{title:'Class Representative Election',sub:'Section 2CSB • 2nd Year CSE',candidates:['Astha Uttam','Karan Gaur','Garima Tyagi','Atharv Singh Chauhan','Deepanshu Tyagi']},
+'2CSC':{title:'Class Representative Election',sub:'Section 2CSC • 2nd Year CSE',candidates:['Nikhil Singh','Kirti Dubey','Prakhar Tyagi','Nandani Badal','Lakshay Tyagi']},
+'2CSD':{title:'Class Representative Election',sub:'Section 2CSD • 2nd Year CSE',candidates:['Prashant Kumar','Pratham Srivastava','Rishabh Kumar','Risha Maurya','Pratham Mittal']},
+'COUNCIL':{title:'Student Council Election',sub:'Institute-wide',candidates:['Animesh Jain','Himanshi Bhardwaj','Prabal Srivastava','Sangam Maurya']}
+};
+const manifestos=['“Better academic collaboration and student representation.”','“More clubs, activities and student-led initiatives.”','“A more connected and inclusive classroom.”','“Focused on transparency and student welfare.”','“Bridging students and faculty for a better campus.”'];
+let currentElection=null;
+function openVote(id){
+currentElection=id;
+const e=elections[id];
+const options=e.candidates.map((name,i)=>`<label class="card candidate"><input type="radio" name="candidate" value="${name}"><div><strong>${name}</strong><div class="muted">${manifestos[i%manifestos.length]}</div></div></label>`).join('');
+openModal(`<div class="modalhead"><div><h2>Cast Your Vote</h2><p class="muted">${e.title} • ${e.sub}</p></div><button class="close" onclick="closeModal()">×</button></div>
+<div class="notice">🔐 <strong>One Student – One Vote.</strong> You can select only one candidate.</div>
+<div style="display:grid;gap:12px;margin:18px 0">
+${options}
+</div><button class="btn primary" onclick="confirmVote()">Continue to Confirmation</button>`);
+}
+function confirmVote(){const c=document.querySelector('input[name=candidate]:checked');if(!c){toast('Please select a candidate');return}const name=c.value;const e=elections[currentElection];openModal(`<div class="modalhead"><h2>Confirm Your Vote</h2><button class="close" onclick="closeModal()">×</button></div><div class="notice warning">You are about to cast your vote for <strong>${name}</strong>. This action cannot be undone.</div><div class="card" style="margin:16px 0"><strong>Election:</strong> ${e.title} (${e.sub})<br><strong>Candidate:</strong> ${name}<br><strong>Rule:</strong> One Student – One Vote</div><div class="actions"><button class="btn secondary" onclick="openVote(currentElection)">Back</button><button class="btn primary" onclick="voteDone()">Confirm Vote</button></div>`)}
+function voteDone(){openModal(`<div style="text-align:center;padding:18px"><div style="font-size:52px">✅</div><h2>Vote Successfully Submitted</h2><p class="muted">Your vote has been recorded. You cannot vote again in this election.</p><button class="btn primary" onclick="closeModal();toast('Vote recorded successfully')">Done</button></div>`)}
+
+function submitReport(e){e.preventDefault();const text=document.getElementById('incident').value;openModal(`<div class="modalhead"><div><h2>🤖 AI-Assisted Draft</h2><p class="muted">Your report has been received and a professional email draft is ready for review.</p></div><button class="close" onclick="closeModal()">×</button></div><div class="form"><div><label>To</label><input value="Anti-Ragging Committee / Concerned Faculty" readonly></div><div><label>Subject</label><input value="Confidential Anti-Ragging Incident Report" readonly></div><div><label>AI Generated Message</label><textarea>Dear Sir/Madam,
+
+I am writing to confidentially report an incident that requires the attention of the Anti-Ragging Committee.
+
+Incident summary:
+${text}
+
+I request that the matter be reviewed appropriately and handled confidentially.
+
+Regards,
+ELECTICORE Student Safety Portal</textarea></div></div><div class="actions"><button class="btn secondary" onclick="closeModal()">Edit Later</button><button class="btn primary" onclick="sendReport()">Approve & Send</button></div>`)}
+function sendReport(){openModal(`<div style="text-align:center;padding:18px"><div style="font-size:52px">📨</div><h2>Faculty Alert Prepared</h2><p class="muted">Your complaint workflow has moved to the faculty/committee review stage.</p><button class="btn primary" onclick="closeModal();toast('Report submitted confidentially')">Done</button></div>`)}
+
+function openStatus(){openModal(`<div class="modalhead"><div><h2>Report #AR-1024</h2><p class="muted">Confidential Anti-Ragging Report</p></div><button class="close" onclick="closeModal()">×</button></div><div class="timeline"><div class="step done"><div class="dot">✓</div><div><strong>Report Submitted</strong><div class="muted">Received by ELECTICORE</div></div></div><div class="step done"><div class="dot">✓</div><div><strong>AI Analysis Completed</strong><div class="muted">Complaint email draft prepared</div></div></div><div class="step done"><div class="dot">✓</div><div><strong>Faculty Notified</strong><div class="muted">Concerned authority alerted</div></div></div><div class="step current"><div class="dot">●</div><div><strong>Under Review</strong><div class="muted">Awaiting committee action</div></div></div></div>`)}
+
+function facultyCard(f){return `<div class="card"><div class="faculty"><div class="avatar">${f.initials}</div><div><h3 style="margin:0">${f.name}</h3><div class="muted">${f.role}</div><span class="tag" style="margin-top:6px">${deptNames[f.dept]}</span></div></div><div class="card-actions"><a class="btn ghost" href="https://www.abesit.in/faculty/${f.slug}/" target="_blank" rel="noopener">View Full Profile</a><button class="btn secondary" onclick="facultyProfile('${f.slug}')">Quick View</button></div></div>`}
+function renderFaculty(list=faculty){
+  const groups={};
+  list.forEach(f=>{(groups[f.dept]=groups[f.dept]||[]).push(f)});
+  const order=Object.keys(deptNames).filter(k=>groups[k]&&groups[k].length);
+  if(!order.length){document.getElementById('facultyGrid').innerHTML='<p class="muted">No faculty match your search.</p>';return}
+  document.getElementById('facultyGrid').innerHTML=order.map(k=>`<div class="dept-group"><div class="dept-group-head"><h3>${deptNames[k]}</h3><span class="tag">${groups[k].length} faculty</span></div><div class="grid three">${groups[k].map(facultyCard).join('')}</div></div>`).join('')}
+function filterFaculty(){const q=document.getElementById('facultySearch').value.toLowerCase(),d=document.getElementById('dept').value;renderFaculty(faculty.filter(f=>(!q||(f.name+' '+f.role+' '+deptNames[f.dept]).toLowerCase().includes(q))&&(!d||f.dept===d)))}
+function populateDeptFilter(){const sel=document.getElementById('dept');Object.keys(deptNames).forEach(k=>{const o=document.createElement('option');o.value=k;o.textContent=deptNames[k];sel.appendChild(o)})}
+function facultyProfile(slug){const f=faculty.find(x=>x.slug===slug);openModal(`<div class="modalhead"><div><h2>${f.name}</h2><p class="muted">${f.role} • ${deptNames[f.dept]}</p></div><button class="close" onclick="closeModal()">×</button></div><div class="card"><div class="avatar" style="width:65px;height:65px;font-size:20px">${f.initials}</div><p><strong>Department:</strong> ${deptNames[f.dept]}</p><p><strong>Designation:</strong> ${f.role}</p><p class="muted" style="margin-top:10px">Full qualification, experience, publications and photo are on their official ABESIT profile.</p></div><a class="btn primary" href="https://www.abesit.in/faculty/${f.slug}/" target="_blank" rel="noopener" onclick="closeModal()">Open Full Profile ↗</a>`)}
+
+function renderEvents(list=events){document.getElementById('eventGrid').innerHTML=list.map(e=>`<div class="card"><div class="event"><div class="event-img">${e.icon}</div><div><span class="tag">${e.type}</span><h3>${e.name}</h3><div class="muted">${e.date} • ${e.place}</div></div></div><p class="muted">${e.desc}</p><div class="card-actions"><button class="btn primary" onclick="eventDetails('${e.name}')">View Details</button><button class="btn secondary" onclick="toast('You will be notified about this event')">Get Notified</button></div></div>`).join('')}
+function filterEvents(){const q=document.getElementById('eventSearch').value.toLowerCase(),t=document.getElementById('eventType').value;renderEvents(events.filter(e=>(!q||Object.values(e).join(' ').toLowerCase().includes(q))&&(!t||e.type===t)))}
+function eventDetails(name){const e=events.find(x=>x.name===name);openModal(`<div class="modalhead"><div><span class="tag">${e.type}</span><h2>${e.name}</h2></div><button class="close" onclick="closeModal()">×</button></div><div class="card"><p><strong>📅 Date:</strong> ${e.date}</p><p><strong>📍 Venue:</strong> ${e.place}</p><p><strong>About:</strong> ${e.desc}</p><p><strong>Eligibility:</strong> Current students</p></div><div class="actions"><button class="btn primary" onclick="closeModal();toast('Registration opened')">Register</button><button class="btn secondary" onclick="toast('Event added to calendar')">Add to Calendar</button></div>`)}
+
+// Initial rendering happens after the API state below has been initialised.
+
+// Persistent application actions. The static sample cards are replaced after sign-in.
+let authToken=localStorage.getItem('electicore_token'),serverElections=[],selectedElection=null,pendingIncident='',currentStudent=null;
+const escapeHtml=value=>String(value??'').replace(/[&<>'"]/g,char=>({'&':'&amp;','<':'&lt;','>':'&gt;',"'":'&#39;','"':'&quot;'}[char]));
+async function api(path,options={}){
+  const headers={'Content-Type':'application/json',...(options.headers||{})};
+  if(authToken)headers.Authorization=`Bearer ${authToken}`;
+  const response=await fetch(path,{...options,headers});
+  const data=await response.json().catch(()=>({}));
+  if(!response.ok)throw new Error(data.error||'Something went wrong');
+  return data;
+}
+function setUser(student){
+  currentStudent=student;
+  document.getElementById('userName').textContent=student.name;
+  document.getElementById('userAvatar').textContent=student.name.split(/\s+/).map(x=>x[0]).slice(0,2).join('').toUpperCase();
+  const isAdmin=student.role==='admin';
+  document.getElementById('adminTitle').style.display=isAdmin?'block':'none';
+  document.getElementById('adminArea').style.display=isAdmin?'block':'none';
+  if(isAdmin){loadAdminStudents();loadAdminReports();}
+  refreshMySafetyCount();loadNotifications();loadResources();
+}
+function showAuth(){
+  openModal(`<div class="modalhead"><div><h2>Sign in to ELECTICORE</h2><p class="muted">Use your campus portal account.</p></div><button class="close" onclick="closeModal()">×</button></div>
+  <form class="form" onsubmit="authenticate(event)"><div><label>Name <span class="muted">(needed only to create an account)</span></label><input id="authName" maxlength="100" placeholder="Your full name"></div><div><label>Email</label><input id="authEmail" type="email" required placeholder="you@example.edu"></div><div><label>Password</label><input id="authPassword" type="password" minlength="10" required placeholder="At least 10 characters"></div><div class="actions"><button class="btn primary" type="submit">Sign in</button><button class="btn secondary" type="button" onclick="authenticate(event,true)">Create account</button></div></form>`);
+}
+function showProfileSettings(){
+  if(!currentStudent){showAuth();toast('Sign in to manage your profile');return}
+  openModal(`<div class="modalhead"><div><h2>Profile settings</h2><p class="muted">Update your campus account details and password.</p></div><button class="close" onclick="closeModal()">×</button></div>
+    <section class="card" style="margin-top:16px"><h3>Account details</h3><form class="form" onsubmit="saveProfile(event)">
+      <div><label for="profileName">Full name</label><input id="profileName" maxlength="100" required value="${escapeHtml(currentStudent.name)}"></div>
+      <div><label for="profileEmail">Email address</label><input id="profileEmail" type="email" maxlength="120" required value="${escapeHtml(currentStudent.email)}"></div>
+      <button class="btn primary" type="submit">Save profile</button>
+    </form></section>
+    <section class="card" style="margin-top:14px"><h3>Change password</h3><form class="form" onsubmit="changePassword(event)">
+      <div><label for="currentPassword">Current password</label><input id="currentPassword" type="password" autocomplete="current-password" required></div>
+      <div><label for="newPassword">New password</label><input id="newPassword" type="password" autocomplete="new-password" minlength="10" required><small class="muted">Use at least 10 characters.</small></div>
+      <div><label for="confirmPassword">Confirm new password</label><input id="confirmPassword" type="password" autocomplete="new-password" minlength="10" required></div>
+      <button class="btn secondary" type="submit">Update password</button>
+    </form></section>`);
+}
+async function saveProfile(event){
+  event.preventDefault();
+  try{
+    const result=await api('/api/auth/me',{method:'PATCH',body:JSON.stringify({name:document.getElementById('profileName').value,email:document.getElementById('profileEmail').value})});
+    setUser(result.student);closeModal();toast('Profile updated');
+  }catch(error){toast(error.message)}
+}
+async function changePassword(event){
+  event.preventDefault();
+  const currentPassword=document.getElementById('currentPassword').value;
+  const newPassword=document.getElementById('newPassword').value;
+  const confirmPassword=document.getElementById('confirmPassword').value;
+  if(newPassword!==confirmPassword){toast('New passwords do not match');return}
+  try{
+    await api('/api/auth/me',{method:'PATCH',body:JSON.stringify({current_password:currentPassword,new_password:newPassword})});
+    closeModal();toast('Password updated');
+  }catch(error){toast(error.message)}
+}
+async function authenticate(event,register=false){
+  event.preventDefault();
+  const email=document.getElementById('authEmail').value,password=document.getElementById('authPassword').value;
+  try{
+    if(register){await api('/api/auth/register',{method:'POST',body:JSON.stringify({name:document.getElementById('authName').value,email,password})});}
+    const result=await api('/api/auth/login',{method:'POST',body:JSON.stringify({email,password})});
+    authToken=result.token;localStorage.setItem('electicore_token',authToken);setUser(result.student);closeModal();toast(register?'Account created':'Signed in');loadElections();loadPortalEvents();
+  }catch(err){toast(err.message)}
+}
+async function restoreSession(){
+  if(!authToken)return;
+  try{setUser((await api('/api/auth/me')).student);loadElections()}catch(err){localStorage.removeItem('electicore_token');authToken=null;}
+}
+async function loadElections(){
+  try{
+    serverElections=(await api('/api/elections')).elections;
+    const grid=document.getElementById('electionGrid');
+    const openCount=serverElections.filter(e=>e.status==='open').length;
+    document.getElementById('electionCount').textContent=`${openCount} open · ${serverElections.length} total`;
+    document.getElementById('statActiveElections').textContent=openCount;
+    grid.innerHTML=serverElections.length?serverElections.map(e=>`<article class="card"><span class="tag ${e.status==='open'?'open':e.status==='upcoming'?'pending':'closed'}">${escapeHtml(e.status)}</span><h3>${escapeHtml(e.title)}</h3><p class="muted">${escapeHtml(e.description||'Campus election')}</p><p class="muted"><strong>Voting ${e.status==='upcoming'?'opens':'closes'}:</strong> ${new Date(e.status==='upcoming'?e.start_date:e.end_date).toLocaleString()}</p><p class="muted">${e.candidates.length} candidates</p>${e.status==='open'?`<button class="btn primary" onclick="openVote(${e.id})">Review candidates & vote</button>`:e.results_published?'<span class="tag open">Official results published</span>':`<button class="btn secondary" disabled>${e.status==='upcoming'?'Voting not open':'Voting closed'}</button>`}</article>`).join(''):'<div class="card"><p class="muted">There are no elections yet. Check back when your campus publishes one.</p></div>';
+    renderRecentActivity();
+    renderPublishedResults();
+    if(currentStudent?.role==='admin')loadAdminElectionResults();
+  }catch(err){toast(err.message)}
+}
+function renderRecentActivity(){
+  const target=document.getElementById('recentActivity');
+  const election=serverElections.filter(item=>item.status==='open').sort((a,b)=>new Date(a.end_date)-new Date(b.end_date))[0];
+  const latestEvent=portalEvents.filter(event=>event.starts_at&&new Date(event.starts_at)>=new Date()).sort((a,b)=>new Date(a.starts_at)-new Date(b.starts_at))[0];
+  const electionCard=election?`<article class="card"><span class="tag open">Voting open</span><h3>${escapeHtml(election.title)}</h3><p class="muted">Closes ${new Date(election.end_date).toLocaleString()}</p><button class="btn primary" onclick="showPage('elections')">View election</button></article>`:'<article class="card"><span class="tag">Elections</span><h3>No open elections</h3><p class="muted">Upcoming and completed elections are listed in the Elections page.</p><button class="btn secondary" onclick="showPage(\'elections\')">View elections</button></article>';
+  const eventCard=latestEvent?`<article class="card"><span class="tag">${escapeHtml(latestEvent.type||'Campus event')}</span><h3>${escapeHtml(latestEvent.name)}</h3><p class="muted">${escapeHtml(latestEvent.venue||'Campus')} · ${escapeHtml(formatDate(latestEvent.starts_at))}</p><button class="btn secondary" onclick="showPage('events')">View events</button></article>`:'<article class="card"><span class="tag">Events</span><h3>No upcoming events</h3><p class="muted">Campus events will appear here when published.</p><button class="btn secondary" onclick="showPage(\'events\')">Browse events</button></article>';
+  target.innerHTML=electionCard+eventCard;
+}
+async function renderPublishedResults(){
+  const target=document.getElementById('publishedResults');
+  const released=serverElections.filter(e=>e.status==='closed'&&e.results_published);
+  if(!released.length){target.innerHTML='<div class="card"><p class="muted">No official election results have been published yet.</p></div>';return}
+  const results=await Promise.all(released.map(async election=>{try{return await api(`/api/elections/${election.id}/published-results`)}catch(_error){return null}}));
+  const available=results.filter(Boolean);
+  target.innerHTML=available.length?available.map(data=>{
+    const winnerVotes=Math.max(...data.results.map(candidate=>candidate.votes));
+    const leaders=data.results.filter(candidate=>candidate.votes===winnerVotes);
+    const winnerText=data.total_votes?leaders.length===1?`Winner: ${escapeHtml(leaders[0].name)}`:`Tie between ${leaders.map(candidate=>escapeHtml(candidate.name)).join(' and ')}`:'No votes were cast';
+    return `<article class="card"><div class="section-title" style="margin:0 0 14px"><div><span class="tag open">Official result</span><h3>${escapeHtml(data.election.title)}</h3></div><span class="tag">${data.total_votes} votes</span></div><p class="muted">${winnerText}</p><div class="grid" style="gap:12px">${data.results.map(candidate=>`<div><div style="display:flex;justify-content:space-between;gap:12px"><strong>${escapeHtml(candidate.name)}</strong><span class="muted">${candidate.votes} · ${candidate.percentage}%</span></div><div class="bar" role="progressbar" aria-label="${escapeHtml(candidate.name)} vote share" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${candidate.percentage}"><span style="width:${candidate.percentage}%"></span></div></div>`).join('')}</div></article>`
+  }).join(''):'<div class="card"><p class="muted">Published results could not be loaded. Refresh and try again.</p></div>';
+}
+async function refreshMySafetyCount(){
+  if(!authToken){document.getElementById('statSafety').textContent='—';return}
+  try{const reports=(await api('/api/reports')).reports;document.getElementById('statSafety').textContent=reports.length}
+  catch(_error){document.getElementById('statSafety').textContent='—'}
+}
+async function loadNotifications(){
+  const target=document.getElementById('notificationList'),badge=document.getElementById('notificationBadge');
+  if(!authToken){target.innerHTML='<div class="card"><p class="muted">Sign in to view your notifications.</p></div>';badge.style.display='none';return}
+  try{
+    const items=(await api('/api/notifications')).notifications,unread=items.filter(item=>!item.is_read).length;
+    badge.textContent=unread;badge.style.display=unread?'inline-flex':'none';
+    target.innerHTML=items.length?items.map(item=>`<article class="card"><div class="section-title" style="margin:0 0 8px"><div><span class="tag ${item.is_read?'':'open'}">${item.is_read?'Read':'New'}</span><h3>${escapeHtml(item.title)}</h3></div><time class="muted">${new Date(item.created_at).toLocaleString()}</time></div><p class="muted">${escapeHtml(item.message)}</p>${item.is_read?'':`<button class="btn secondary" onclick="markNotificationRead(${item.id})">Mark as read</button>`}</article>`).join(''):'<div class="card"><p class="muted">You’re all caught up. New campus notifications will appear here.</p></div>';
+  }catch(_error){target.innerHTML='<div class="notice warning">Notifications could not be loaded. Refresh and try again.</div>';badge.style.display='none'}
+}
+async function markNotificationRead(id){try{await api(`/api/notifications/${id}/read`,{method:'PATCH'});await loadNotifications()}catch(error){toast(error.message)}}
+async function markAllNotificationsRead(){try{await api('/api/notifications/read-all',{method:'POST'});await loadNotifications();toast('Notifications marked as read')}catch(error){toast(error.message)}}
+async function sendStudentNotification(event){
+  event.preventDefault();
+  try{await api('/api/notifications',{method:'POST',body:JSON.stringify({student_id:Number(document.getElementById('notificationStudent').value),title:document.getElementById('notificationTitle').value.trim(),message:document.getElementById('notificationMessage').value.trim()})});event.target.reset();toast('Notification sent');}
+  catch(error){toast(error.message)}
+}
+document.getElementById('statFaculty').textContent=faculty.length;
+async function loadAdminStudents(){
+  try{
+    const students=(await api('/api/admin/students')).students;
+    const select=document.getElementById('adminCandidates');
+    select.innerHTML=students.map(s=>`<option value="${s.id}">${escapeHtml(s.name)} — ${escapeHtml(s.email)}</option>`).join('');
+    document.getElementById('notificationStudent').innerHTML='<option value="">Choose a student</option>'+students.map(s=>`<option value="${s.id}">${escapeHtml(s.name)} — ${escapeHtml(s.email)}</option>`).join('');
+  }catch(err){toast(err.message)}
+}
+function loadAdminElectionResults(){
+  const target=document.getElementById('adminElectionResults');
+  if(!serverElections.length){target.innerHTML='<p class="muted">No elections have been created yet.</p>';return}
+  target.innerHTML=serverElections.map(election=>{
+    const closed=election.status==='closed',published=election.results_published;
+    const statusClass=election.status==='open'?'open':election.status==='upcoming'?'pending':'closed';
+    const controls=closed?`<button class="btn secondary" onclick="reviewElectionResults(${election.id})">${published?'View published results':'Review tally'}</button>${published?'':`<button class="btn primary" onclick="publishElectionResults(${election.id})">Publish official results</button>`}`:`<button class="btn secondary" disabled>Available after voting closes</button>`;
+    return `<article class="card"><div class="section-title" style="margin:0 0 10px"><div><span class="tag ${statusClass}">${escapeHtml(election.status)}</span><h3>${escapeHtml(election.title)}</h3></div>${published?'<span class="tag open">Published</span>':''}</div><p class="muted">${escapeHtml(election.description||'Campus election')} · ${election.candidates.length} candidates</p><div class="card-actions">${controls}</div></article>`
+  }).join('');
+}
+async function reviewElectionResults(electionId){
+  try{
+    const data=await api(`/api/elections/${electionId}/results`);
+    const high=Math.max(...data.results.map(candidate=>candidate.votes));
+    const leaders=data.results.filter(candidate=>candidate.votes===high);
+    const outcome=data.total_votes?(leaders.length===1?`Leading candidate: ${escapeHtml(leaders[0].name)}`:`Currently tied: ${leaders.map(candidate=>escapeHtml(candidate.name)).join(', ')}`):'No votes were recorded.';
+    openModal(`<div class="modalhead"><div><span class="tag ${data.results_published?'open':'pending'}">${data.results_published?'Officially published':'Admin review'}</span><h2>${escapeHtml(data.election.title)}</h2><p class="muted">${data.total_votes} total votes · ${outcome}</p></div><button class="close" onclick="closeModal()" aria-label="Close">×</button></div><div class="grid" style="margin:18px 0">${data.results.map(candidate=>`<div class="card"><div style="display:flex;justify-content:space-between;gap:12px"><strong>${escapeHtml(candidate.name)}</strong><strong>${candidate.votes} votes</strong></div><p class="muted">${candidate.percentage}% of recorded votes</p><div class="bar" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="${candidate.percentage}"><span style="width:${candidate.percentage}%"></span></div></div>`).join('')}</div><p class="muted">This view contains totals only. Individual ballots are never shown.</p>${data.results_published?'':'<button class="btn primary" onclick="closeModal();publishElectionResults('+electionId+')">Publish these results</button>'}`);
+  }catch(error){toast(error.message)}
+}
+async function publishElectionResults(electionId){
+  if(!window.confirm('Publish the final vote totals to the student Elections page? This makes the result public.'))return;
+  try{await api(`/api/elections/${electionId}/publish-results`,{method:'POST'});toast('Official election results published');await loadElections()}
+  catch(error){toast(error.message)}
+}
+async function loadAdminReports(){
+  try{
+    const reports=(await api('/api/reports')).reports;
+    const target=document.getElementById('adminReportList');
+    target.innerHTML=reports.length?reports.map(report=>`<article class="card"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><strong>Report AR-${report.id}</strong><span class="tag ${report.delivery_status==='sent'?'open':'pending'}">Email: ${escapeHtml(report.delivery_status.replaceAll('_',' '))}</span></div><p class="muted">${escapeHtml(report.student.name)} (${escapeHtml(report.student.email)}) · ${new Date(report.created_at).toLocaleString()}</p><div class="notice ${report.ai_severity==='extreme'?'warning':report.ai_severity==='moderate'?'pending':report.ai_severity==='low'?'safe':' '}"><strong>Preliminary AI urgency estimate: ${escapeHtml(report.ai_severity||'unassessed')}</strong><br>${escapeHtml(report.ai_assessment_note||'Human review required.')}</div><p>${escapeHtml(report.incident)}</p><p class="muted">Incident: ${escapeHtml(report.incident_date||'Date not provided')} · ${escapeHtml(report.incident_time||'Time not provided')} · ${escapeHtml(report.location||'Location not provided')}</p>${report.people_involved?`<p><strong>People involved:</strong> ${escapeHtml(report.people_involved)}</p>`:''}${report.additional_details?`<p><strong>Additional details:</strong> ${escapeHtml(report.additional_details)}</p>`:''}<details><summary>View generated committee email</summary><pre style="white-space:pre-wrap;font:inherit" class="muted">${escapeHtml(report.ai_draft||'Draft is unavailable.')}</pre></details><div class="card-actions"><label class="muted" for="reportStatus-${report.id}">Case status</label><select id="reportStatus-${report.id}"><option value="submitted" ${report.status==='submitted'?'selected':''}>Submitted</option><option value="under_review" ${report.status==='under_review'?'selected':''}>Under review</option><option value="resolved" ${report.status==='resolved'?'selected':''}>Resolved</option><option value="closed" ${report.status==='closed'?'selected':''}>Closed</option></select><button class="btn secondary" onclick="updateReportStatus(${report.id})">Save status</button></div></article>`).join(''):'<p class="muted">No reports have been submitted.</p>';
+  }catch(err){toast(err.message)}
+}
+async function updateReportStatus(reportId){
+  const status=document.getElementById(`reportStatus-${reportId}`).value;
+  try{await api(`/api/reports/${reportId}`,{method:'PATCH',body:JSON.stringify({status})});toast('Report status updated');await loadAdminReports()}
+  catch(error){toast(error.message)}
+}
+async function createElectionFromDashboard(event){
+  event.preventDefault();
+  const candidateIds=[...document.getElementById('adminCandidates').selectedOptions].map(option=>Number(option.value));
+  if(candidateIds.length<2){toast('Select at least two candidates');return}
+  try{
+    const result=await api('/api/elections',{method:'POST',body:JSON.stringify({
+      title:document.getElementById('adminElectionTitle').value,
+      description:document.getElementById('adminElectionDescription').value,
+      start_date:document.getElementById('adminElectionStart').value,
+      end_date:document.getElementById('adminElectionEnd').value,
+      candidates:candidateIds.map(student_id=>({student_id}))
+    })});
+    event.target.reset();toast(`Election published: ${result.election.title}`);loadElections();showPage('elections');
+  }catch(err){toast(err.message)}
+}
+async function createEventFromDashboard(event){
+  event.preventDefault();
+  try{
+    await api('/api/events',{method:'POST',body:JSON.stringify({name:document.getElementById('adminEventName').value,type:document.getElementById('adminEventType').value,starts_at:document.getElementById('adminEventStarts').value,venue:document.getElementById('adminEventVenue').value,description:document.getElementById('adminEventDescription').value})});
+    event.target.reset();toast('Campus event published');loadPortalEvents();
+  }catch(err){toast(err.message)}
+}
+async function openVote(id){
+  if(!authToken){showAuth();return}
+  selectedElection=serverElections.find(e=>e.id===id);
+  if(!selectedElection){toast('Refresh elections and try again');return}
+  const options=selectedElection.candidates.map(c=>`<label class="card candidate"><input type="radio" name="candidate" value="${c.id}"><div><strong>${escapeHtml(c.name)}</strong><div class="muted">${escapeHtml(c.manifesto||'No manifesto provided.')}</div></div></label>`).join('');
+  openModal(`<div class="modalhead"><div><h2>Cast your vote</h2><p class="muted">${escapeHtml(selectedElection.title)}</p></div><button class="close" onclick="closeModal()">×</button></div><div class="notice">🔐 One student can vote once in each election.</div><div style="display:grid;gap:12px;margin:18px 0">${options}</div><button class="btn primary" onclick="confirmVote()">Continue to confirmation</button>`);
+}
+function confirmVote(){
+  const selected=document.querySelector('input[name=candidate]:checked');if(!selected){toast('Please select a candidate');return}
+  const candidate=selectedElection.candidates.find(c=>c.id===Number(selected.value));
+  openModal(`<div class="modalhead"><h2>Confirm your vote</h2><button class="close" onclick="closeModal()">×</button></div><div class="notice warning">You are about to vote for <strong>${escapeHtml(candidate.name)}</strong>. This cannot be undone.</div><div class="actions"><button class="btn secondary" onclick="openVote(${selectedElection.id})">Back</button><button class="btn primary" onclick="voteDone(${candidate.id})">Confirm vote</button></div>`);
+}
+async function voteDone(candidateId){
+  try{await api(`/api/elections/${selectedElection.id}/votes`,{method:'POST',body:JSON.stringify({candidate_id:candidateId})});closeModal();toast('Your vote was recorded securely');loadElections()}catch(err){toast(err.message)}
+}
+async function submitReport(event){
+  event.preventDefault();if(!authToken){showAuth();return}
+  const incident=document.getElementById('incident').value.trim(),location=document.getElementById('reportLocation').value.trim();
+  try{
+    const report=(await api('/api/reports',{method:'POST',body:JSON.stringify({incident,location,incident_date:document.getElementById('reportDate').value,incident_time:document.getElementById('reportTime').value,people_involved:document.getElementById('peopleInvolved').value.trim(),additional_details:document.getElementById('additionalDetails').value.trim(),ai_drafting_consent:document.getElementById('aiDraftConsent').checked})})).report;
+    event.target.reset();
+    const delivery=report.delivery_status==='sent'?`The alert was sent to ${escapeHtml(report.recipient_email)}.`:'The report is securely stored. The institution still needs to configure its approved email service before automatic delivery can occur.';
+    const severity=report.ai_severity||'unassessed';
+    const severityClass=severity==='extreme'?'warning':severity==='moderate'||severity==='unassessed'?'pending':'safe';
+    const severityLabel=severity==='unassessed'?'Not assessed':severity[0].toUpperCase()+severity.slice(1);
+    const resultHeading=severity==='unassessed'?'Report submitted — factual template used':'AI-assisted draft and urgency review';
+    const draftLabel=severity==='unassessed'?'Email prepared for the configured campus recipient':'Polished AI email draft for the configured campus recipient';
+    const urgentMessage=severity==='extreme'?'<div class="notice warning" style="margin-top:10px"><strong>Possible immediate danger.</strong> Contact campus security or local emergency services now. This estimate is not a substitute for urgent help.</div>':'';
+    openModal(`<div class="modalhead"><div><h2>Report AR-${report.id} submitted</h2><p class="muted">${resultHeading}</p></div><button class="close" onclick="closeModal()">×</button></div><div class="notice safe">${delivery}</div><div class="card" style="margin-top:12px"><strong>Preliminary AI urgency estimate: </strong><span class="tag ${severityClass}">${escapeHtml(severityLabel)}</span><p class="muted" style="margin-bottom:0">${escapeHtml(report.ai_assessment_note||'A human reviewer should assess this report.')}</p></div>${urgentMessage}<div class="form" style="margin-top:16px"><div><label>${draftLabel}</label><textarea readonly>${escapeHtml(report.ai_draft)}</textarea></div></div><p class="muted">The estimate is advisory and must be reviewed by the committee. Track the report from “View My Report Status”.</p><button class="btn primary" onclick="closeModal()">Done</button>`);
+    if(document.getElementById('adminArea').style.display!=='none')loadAdminReports();
+  }catch(err){toast(err.message)}
+}
+async function openStatus(){
+  if(!authToken){showAuth();return}
+  try{
+    const reports=(await api('/api/reports')).reports;
+    const body=reports.length?reports.map(r=>`<div class="card status-report-card"><strong>Report #AR-${r.id}</strong><p class="muted">Submitted ${new Date(r.created_at).toLocaleString()}</p><span class="tag pending">${escapeHtml(r.status.replaceAll('_',' '))}</span><div class="notice ${r.ai_severity==='extreme'?'warning':r.ai_severity==='moderate'?'pending':r.ai_severity==='low'?'safe':' '}" style="margin-top:10px"><strong>Preliminary AI urgency estimate: ${escapeHtml((r.ai_severity||'unassessed').replace(/^./,letter=>letter.toUpperCase()))}</strong><br>${escapeHtml(r.ai_assessment_note||'Human review required.')}</div><p class="muted">Incident: ${escapeHtml(r.incident_date||'Date not provided')} · ${escapeHtml(r.incident_time||'Time not provided')} · ${escapeHtml(r.location||'Location not provided')}</p><details><summary>View report details and committee email</summary><p>${escapeHtml(r.incident)}</p>${r.people_involved?`<p><strong>People involved:</strong> ${escapeHtml(r.people_involved)}</p>`:''}${r.additional_details?`<p><strong>Additional details:</strong> ${escapeHtml(r.additional_details)}</p>`:''}<p class="muted">Committee email: ${escapeHtml(r.delivery_status.replaceAll('_',' '))}</p><pre style="white-space:pre-wrap;font:inherit" class="muted">${escapeHtml(r.ai_draft||'Preparing email draft…')}</pre></details></div>`).join(''):'<div class="notice">You have not submitted any reports.</div>';
+    openModal(`<div class="modalhead"><div><h2>My confidential reports</h2><p class="muted">Only you and authorised reviewers can see this information.</p></div><button class="close" onclick="closeModal()">×</button></div><div class="grid status-report-list" style="margin-top:16px">${body}</div>`);
+  }catch(err){toast(err.message)}
+}
+function logout(){authToken=null;currentStudent=null;serverElections=[];localStorage.removeItem('electicore_token');document.getElementById('userName').textContent='Sign in';document.getElementById('userAvatar').textContent='?';document.getElementById('adminTitle').style.display='none';document.getElementById('adminArea').style.display='none';document.getElementById('statActiveElections').textContent='—';document.getElementById('statSafety').textContent='—';document.getElementById('electionCount').textContent='Sign in to view';document.getElementById('electionGrid').innerHTML='<div class="card"><p class="muted">Sign in to load current campus elections.</p></div>';document.getElementById('publishedResults').innerHTML='<div class="card"><p class="muted">Sign in to view published campus election results.</p></div>';document.getElementById('recentActivity').innerHTML='<div class="card"><p class="muted">Sign in to see current elections and activity.</p></div><div class="card"><p class="muted">Campus events will appear here when published.</p></div>';loadNotifications();loadResources();toast('Signed out');}
+// API-backed Events and Notes Hub.
+let portalEvents=[];
+function eventIcon(type){return ({Hackathon:'💻',Workshop:'🌐',Club:'👥',Seminar:'🎓',Event:'📅'})[type]||'📢'}
+function formatDate(value){return new Date(value).toLocaleString(undefined,{dateStyle:'medium',timeStyle:'short'})}
+function renderEvents(list=portalEvents){
+  const grid=document.getElementById('eventGrid');
+  if(!list.length){grid.innerHTML='<div class="notice">No matching events right now. Check back soon.</div>';return}
+  const now=new Date();
+  const ordered=list.slice().sort((a,b)=>{const aTime=new Date(a.starts_at||a.date),bTime=new Date(b.starts_at||b.date),aPast=aTime<now,bPast=bTime<now;return aPast===bPast?aTime-bTime:aPast?1:-1});
+  grid.innerHTML=ordered.map(event=>`<article class="card"><div class="event"><div class="event-img">${eventIcon(event.type)}</div><div><span class="tag">${escapeHtml(event.type)}</span><h3>${escapeHtml(event.name)}</h3><div class="muted">${escapeHtml(event.date||formatDate(event.starts_at))} · ${escapeHtml(event.place||event.venue||'Campus')}</div></div></div><p class="muted">${escapeHtml(event.desc||event.description||'Campus activity')}</p><div class="card-actions"><button class="btn primary" onclick="eventDetailsById(${event.id||0})">View details</button><button class="btn secondary" onclick="saveEventReminder(${event.id||0},'${escapeHtml(event.name).replace(/'/g,'&#39;')}')">Save reminder</button></div></article>`).join('');
+}
+function filterEvents(){const query=document.getElementById('eventSearch').value.toLowerCase(),type=document.getElementById('eventType').value;renderEvents(portalEvents.filter(event=>{const content=Object.values(event).join(' ').toLowerCase();return (!query||content.includes(query))&&(!type||event.type===type)}))}
+async function loadPortalEvents(){try{const response=await api('/api/events');portalEvents=response.events;renderEvents();document.getElementById('statEvents').textContent=portalEvents.length;renderRecentActivity()}catch(_error){portalEvents=[];renderEvents();document.getElementById('statEvents').textContent='—';renderRecentActivity()}}
+function eventDetailsById(id){const event=portalEvents.find(item=>item.id===id)||portalEvents.find(item=>!id);if(!event)return;openModal(`<div class="modalhead"><div><span class="tag">${escapeHtml(event.type)}</span><h2>${escapeHtml(event.name)}</h2></div><button class="close" onclick="closeModal()">×</button></div><div class="card"><p><strong>Date:</strong> ${escapeHtml(event.date||formatDate(event.starts_at))}</p><p><strong>Venue:</strong> ${escapeHtml(event.place||event.venue||'Campus')}</p><p><strong>About:</strong> ${escapeHtml(event.desc||event.description||'Campus activity')}</p></div><button class="btn primary" onclick="saveEventReminder(${event.id||0},'${escapeHtml(event.name).replace(/'/g,'&#39;')}');closeModal()">Save reminder</button>`)}
+function saveEventReminder(id,name){const key=`electicore_event_${id||name}`;localStorage.setItem(key,'saved');toast(`${name} saved in this browser`)}
+async function loadResources(){
+  const grid=document.getElementById('resourceGrid');
+  try{const {resources}=await api('/api/resources');grid.innerHTML=resources.length?resources.map(resource=>`<article class="card"><span class="tag">${escapeHtml(resource.subject)}</span><h3>${escapeHtml(resource.title)}</h3><p class="muted">${escapeHtml(resource.description||'Shared study material')}</p><p class="muted" style="font-size:13px">${escapeHtml(resource.filename)} · Shared by ${escapeHtml(resource.uploaded_by)}</p><div class="card-actions"><a class="btn primary" href="${resource.download_url}">Download</a>${currentStudent?.role==='admin'?`<button class="btn secondary" onclick="deleteResource(${Number(resource.id)})">Delete</button>`:''}</div></article>`).join(''):'<div class="notice">No study resources have been uploaded yet.</div>'}catch(error){grid.innerHTML='<div class="notice warning">Study resources are temporarily unavailable.</div>'}
+}
+async function deleteResource(resourceId){
+  if(currentStudent?.role!=='admin')return;
+  if(!confirm('Delete this study resource and its uploaded file? This cannot be undone.'))return;
+  try{await api(`/api/resources/${resourceId}`,{method:'DELETE'});toast('Study resource deleted');loadResources()}catch(error){toast(error.message)}
+}
+function showUploadResource(){
+  if(!authToken){showAuth();return}
+  openModal(`<div class="modalhead"><div><h2>Upload study resource</h2><p class="muted">Share course material responsibly. Maximum file size: 15 MB.</p></div><button class="close" onclick="closeModal()">×</button></div><form class="form" onsubmit="uploadResource(event)"><div><label>Resource title *</label><input name="title" maxlength="150" required placeholder="e.g. Data Structures Unit 2 Notes"></div><div><label>Subject *</label><input name="subject" maxlength="100" required placeholder="e.g. Data Structures"></div><div><label>Short description</label><textarea name="description" maxlength="1000" placeholder="What does this resource cover?"></textarea></div><div><label>File *</label><input name="file" type="file" required accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.zip"></div><p class="muted" style="font-size:13px">Allowed: PDF, DOC, DOCX, PPT, PPTX, TXT and ZIP.</p><button class="btn primary" type="submit">Upload resource</button></form>`)
+}
+async function uploadResource(event){
+  event.preventDefault();
+  const formData=new FormData(event.target);
+  try{const response=await fetch('/api/resources',{method:'POST',headers:{Authorization:`Bearer ${authToken}`},body:formData});const data=await response.json().catch(()=>({}));if(!response.ok)throw new Error(data.error||'Upload failed');closeModal();toast('Study resource uploaded');loadResources()}catch(error){toast(error.message)}}
+const originalRestoreSession=restoreSession;
+restoreSession=async function(){await originalRestoreSession();loadPortalEvents();loadResources()};
+populateDeptFilter();renderFaculty();renderEvents();showPage('home');
+restoreSession();
+</script>
+<script>/* ELECTICORE premium layer: purely additive; original functions are wrapped, never rewritten. */
+(()=>{
+const reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+const P={home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',vote:'<path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',shield:'<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>',users:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"/>',calendar:'<rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/>',books:'<path d="M12 7v14M3 18V5a2 2 0 0 1 2-2h2a5 5 0 0 1 5 5 5 5 0 0 1 5-5h2a2 2 0 0 1 2 2v13h-4a5 5 0 0 0-5 3 5 5 0 0 0-5-3z"/>',bell:'<path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9"/><path d="M10.3 21a1.9 1.9 0 0 0 3.4 0"/>',settings:'<path d="M4 21v-7M4 10V3M12 21v-9M12 8V3M20 21v-5M20 12V3M1 14h6M9 8h6M17 16h6"/>',logout:'<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"/>',admin:'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>'};
+const svg=k=>`<svg viewBox="0 0 24 24" aria-hidden="true">${P[k]}</svg>`;
+const map={home:'home',elections:'vote',safety:'shield',faculty:'users',events:'calendar',notes:'books',notifications:'bell',admin:'admin'};
+document.querySelectorAll('.side button').forEach(b=>{
+  const k=map[b.dataset.page]||(/Settings/.test(b.textContent)?'settings':/Logout/.test(b.textContent)?'logout':null);if(!k)return;
+  const t=[...b.childNodes].find(n=>n.nodeType===3&&n.textContent.trim());if(t)t.textContent=t.textContent.replace(/^[^A-Za-z]+/,'');
+  b.insertAdjacentHTML('afterbegin',svg(k));
+});
+['vote','calendar','users','shield'].forEach((k,i)=>{const e=document.querySelectorAll('.stat .icon')[i];if(e)e.innerHTML=svg(k)});
+['vote','shield','users','calendar'].forEach((k,i)=>{const e=document.querySelectorAll('.grid.four .icon')[i];if(e)e.innerHTML=svg(k)});
+const logo=document.querySelector('.logo');if(logo)logo.innerHTML='<svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 2 3 7v10l9 5 9-5V7z"/><circle cx="12" cy="12" r="2.4" fill="#fff"/><path d="M12 9.6V2M14.1 13.2 21 17M9.9 13.2 3 17"/></svg>';
+/* animated counters on stat values filled in by the existing API code */
+['statActiveElections','statEvents','statFaculty','statSafety'].forEach(id=>{
+  const el=document.getElementById(id);if(!el)return;
+  new MutationObserver(()=>{const t=parseInt(el.textContent,10);if(isNaN(t)||el._last===t||el._busy)return;el._last=t;if(reduce||t===0)return;
+    el._busy=true;const s=performance.now();(function f(n){const p=Math.min((n-s)/800,1);el.textContent=Math.round(t*(1-Math.pow(1-p,3)));if(p<1)requestAnimationFrame(f);else{el.textContent=t;setTimeout(()=>el._busy=false)}})(s)
+  }).observe(el,{childList:true,characterData:true,subtree:true});
+  const t=parseInt(el.textContent,10);if(!isNaN(t))el.textContent=el.textContent;
+});
+/* dialog semantics, Escape, focus return, exit animation (wraps existing openModal/closeModal) */
+const modal=document.getElementById('modal'),box=document.getElementById('modalContent');let last=null;
+modal.setAttribute('role','dialog');modal.setAttribute('aria-modal','true');box.tabIndex=-1;
+const _open=openModal;openModal=function(c){if(!modal.classList.contains('show'))last=document.activeElement;modal.classList.remove('leaving');_open(c);
+  box.querySelectorAll('.close').forEach(b=>b.setAttribute('aria-label','Close dialog'));const h=box.querySelector('h2');if(h){h.id='dlgTitle';modal.setAttribute('aria-labelledby','dlgTitle')}box.focus({preventScroll:true})};
+closeModal=function(){if(!modal.classList.contains('show'))return;modal.classList.add('leaving');setTimeout(()=>{modal.classList.remove('show','leaving');last&&last.focus&&last.focus()},reduce?0:160)};
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeModal()});
+/* "Create account" is type=button, so enforce the form's own validation first */
+const _auth=authenticate;authenticate=function(e,r){if(r){const f=e.target.closest&&e.target.closest('form');if(f&&!f.reportValidity()){e.preventDefault();return}}return _auth(e,r)};
+/* pointer effects: desktop with a fine pointer only */
+if(matchMedia('(hover:hover) and (pointer:fine)').matches&&!reduce){
+  let cur=null,raf=0;const hero=document.querySelector('.hero-3d');
+  document.addEventListener('pointermove',e=>{
+    const c=e.target.closest&&e.target.closest('main .card');
+    if(c!==cur){if(cur)cur.style.transform='';cur=c&&!c.querySelector('form,select,textarea')?c:null}
+    if(cur){const r=cur.getBoundingClientRect(),x=(e.clientX-r.left)/r.width-.5,y=(e.clientY-r.top)/r.height-.5;
+      cur.style.transform=`perspective(900px) rotateX(${(-y*5).toFixed(2)}deg) rotateY(${(x*6).toFixed(2)}deg) translateY(-3px)`;
+      cur.style.setProperty('--gx',(x+.5)*100+'%');cur.style.setProperty('--gy',(y+.5)*100+'%')}
+    if(hero&&!raf){raf=requestAnimationFrame(()=>{raf=0;const r=hero.getBoundingClientRect();
+      if(e.clientY>r.top&&e.clientY<r.bottom){hero.style.setProperty('--mx',((e.clientX-r.left)/r.width*2-1).toFixed(3));hero.style.setProperty('--my',((e.clientY-r.top)/r.height*2-1).toFixed(3))}})}
+  },{passive:true});
+  document.addEventListener('pointerleave',()=>{if(cur)cur.style.transform='';cur=null;if(hero){hero.style.setProperty('--mx',0);hero.style.setProperty('--my',0)}});
+}
+})();</script>
+
+<script>
+/* Keep the scroll indicator responsive without a continuously repainting canvas. */
+(()=>{
+  const bar=document.createElement('div');
+  bar.id='sbar';
+  bar.setAttribute('aria-hidden','true');
+  document.body.appendChild(bar);
+  let framePending=false;
+  const update=()=>{
+    const root=document.documentElement;
+    const maxScroll=Math.max(root.scrollHeight-innerHeight,1);
+    bar.style.transform=`scaleX(${Math.min(scrollY/maxScroll,1)})`;
+    framePending=false;
+  };
+  addEventListener('scroll',()=>{
+    if(framePending)return;
+    framePending=true;
+    requestAnimationFrame(update);
+  },{passive:true});
+  addEventListener('resize',update,{passive:true});
+  update();
+})();
+</script>
+</body>
+</html>
