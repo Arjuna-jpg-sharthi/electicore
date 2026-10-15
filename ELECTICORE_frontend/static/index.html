@@ -26,7 +26,6 @@ main{padding:32px clamp(20px,3vw,44px);max-width:1580px;width:100%;margin:0 auto
 @media(max-width:700px){main{padding:20px 16px}.hero{padding:28px 22px}.hero h1{font-size:34px}.stats,.two,.three,.grid.four{grid-template-columns:1fr!important}.topbar{padding:0 14px;gap:10px}.brand{font-size:12px}.top-actions{gap:6px}.userbox .name{display:none}.searchrow{flex-direction:column}.section-title{align-items:flex-start}.section-title>.btn{flex:none}footer{margin:30px -16px -20px;padding:24px 16px}.event{gap:10px}.modalbox{padding:19px}.card{padding:17px}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{scroll-behavior:auto!important;animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
 
-
 /* ===== ELECTICORE PREMIUM LAYER (scoped overrides) ===== */
 :root{--bg:#f2f5fc;--surface:rgba(255,255,255,.8);--surface-2:rgba(228,235,251,.8);--surface-hover:#fff;--text:#0c1427;--muted:#566280;--line:rgba(30,50,110,.12);--primary:#2b62f5;--primary-strong:#1f4bd1;--primary-soft:rgba(43,98,245,.1);--violet:#7c5cff;--radius:18px;--shadow:0 1px 0 rgba(255,255,255,.9) inset,0 12px 30px -14px rgba(20,35,90,.25);--sidebar:rgba(255,255,255,.72);--focus:rgba(43,98,245,.28);--ease:cubic-bezier(.22,1,.36,1)}
 [data-theme="dark"]{--bg:#060a14;--surface:rgba(18,26,46,.74);--surface-2:rgba(32,44,74,.7);--surface-hover:rgba(30,42,74,.9);--text:#eaf0ff;--muted:#93a1c0;--line:rgba(130,160,255,.15);--primary:#6f9bff;--primary-strong:#9bb9ff;--primary-soft:rgba(111,155,255,.15);--violet:#a28bff;--shadow:0 1px 0 rgba(255,255,255,.06) inset,0 18px 40px -18px rgba(0,0,0,.7);--sidebar:rgba(10,15,30,.72);--focus:rgba(111,155,255,.34)}
@@ -148,130 +147,65 @@ body::after{right:-16vmax;bottom:-18vmax;background:radial-gradient(circle,rgba(
 @media(max-width:700px){.orbit{display:none}body::before,body::after{animation:none}}
 @media(prefers-reduced-motion:reduce){.orbit i,.orbit b,body::before,body::after,.step.current .dot{animation:none!important}.rv{opacity:1!important;filter:none!important;transform:none!important}}
 
-/* Lightweight motion and scrolling overrides */
-html{scroll-behavior:smooth;scroll-padding-top:var(--topbar-height)}
-body{background-attachment:scroll}
-body::before,body::after{display:none}
-.topbar,.sidebar,.card,.modalbox{backdrop-filter:none!important}
-.page.active{animation:page-enter .32s cubic-bezier(.2,.7,.2,1) both}
-@keyframes page-enter{from{opacity:0;transform:translate3d(0,10px,0)}to{opacity:1;transform:translate3d(0,0,0)}}
-.stat::after,.card:has(.card-actions)::after{display:none!important;animation:none!important}
-.section-title h2::after{animation:none}
+
+/* App-specific report presentation retained from the connected frontend. */
 .notice.pending{background:color-mix(in srgb,var(--warning) 11%,var(--surface));color:var(--warning);border-color:color-mix(in srgb,var(--warning) 20%,transparent)}
-.hero:not(.hero-3d)::before,.hero:not(.hero-3d)::after{animation:none!important}
-.cube{animation-duration:40s}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.page.active{animation:none}}
-.modal{backdrop-filter:none}
 .modalbox{overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-gutter:stable}
 #modalContent:has(.status-report-list) .modalhead{position:sticky;top:-24px;z-index:4;margin:-8px -4px 12px;padding:8px 4px 12px;background:var(--surface-hover);border-bottom:1px solid var(--line)}
 .status-report-list{gap:12px}
-.status-report-list>.card{will-change:auto;transition:none;box-shadow:none;backdrop-filter:none}
+.status-report-list>.card{will-change:auto;transition:none}
 .status-report-list>.card::before{display:none}
 .status-report-list>.card:hover{transform:none!important;box-shadow:none!important}
 
+
+/* Alternate visual style from index - 2.html, scoped to its selector. */
 /* ELECTICORE terminal theme, inspired by the supplied portfolio. */
-:root{
-  --bg:#04060b;--surface:rgba(12,18,32,.94);--surface-2:#111a29;--surface-hover:#101827;
-  --text:#e6edf7;--muted:#9aa8bd;--line:rgba(148,175,220,.14);
-  --primary:#c8ff4d;--primary-strong:#dcff8a;--primary-soft:rgba(200,255,77,.11);
-  --violet:#5ce1ff;--success:#a7e85c;--danger:#ff6b78;--warning:#ffc861;
-  --sidebar:rgba(7,11,19,.97);--sidebar-text:#c5d0df;--sidebar-muted:#718096;
-  --focus:rgba(200,255,77,.3);--shadow:0 16px 42px -24px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.035);
-}
-[data-theme="dark"]{
-  color-scheme:dark;--bg:#04060b;--surface:rgba(12,18,32,.94);--surface-2:#111a29;--surface-hover:#101827;
-  --text:#e6edf7;--muted:#9aa8bd;--line:rgba(148,175,220,.14);
-  --primary:#c8ff4d;--primary-strong:#dcff8a;--primary-soft:rgba(200,255,77,.11);
-  --violet:#5ce1ff;--success:#a7e85c;--danger:#ff6b78;--warning:#ffc861;
-  --sidebar:rgba(7,11,19,.97);--sidebar-text:#c5d0df;--sidebar-muted:#718096;
-  --focus:rgba(200,255,77,.3);--shadow:0 16px 42px -24px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.035);
-}
-[data-theme="light"]{
-  --bg:#f4f7f1;--surface:rgba(255,255,255,.94);--surface-2:#eaf0e5;--surface-hover:#f7faf4;
-  --text:#142018;--muted:#586b5e;--line:rgba(34,65,42,.15);
-  --primary:#426b08;--primary-strong:#345606;--primary-soft:rgba(91,139,26,.11);
-  --violet:#087c91;--success:#397b12;--danger:#b52d3b;--warning:#96570a;
-  --sidebar:#edf2e9;--sidebar-text:#34483a;--sidebar-muted:#718071;--focus:rgba(66,107,8,.27);
-  --shadow:0 12px 30px -18px rgba(25,55,33,.24),inset 0 1px 0 rgba(255,255,255,.9);
-}
-body{
-  background-color:var(--bg);
-  background-image:radial-gradient(900px 600px at 5% -12%,rgba(92,225,255,.08),transparent 62%),radial-gradient(760px 520px at 100% 4%,rgba(200,255,77,.07),transparent 62%);
-  background-attachment:fixed;
-}
-body::before{
-  display:block;inset:0;width:auto;height:auto;border-radius:0;filter:none;
-  background-image:linear-gradient(to right,rgba(148,175,220,.035) 1px,transparent 1px),linear-gradient(to bottom,rgba(148,175,220,.035) 1px,transparent 1px);
-  background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 25%,#000 12%,transparent 82%);
-}
-body::after{display:none}
-[data-theme="light"] body{background-image:radial-gradient(900px 600px at 5% -12%,rgba(8,124,145,.08),transparent 62%),radial-gradient(760px 520px at 100% 4%,rgba(91,139,26,.08),transparent 62%)}
-[data-theme="light"] body::before{background-image:linear-gradient(to right,rgba(34,65,42,.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(34,65,42,.04) 1px,transparent 1px)}
-#fx{opacity:.18}
-[data-theme="light"] #fx{opacity:.12}
-.topbar{background:rgba(7,11,19,.9);border-bottom-color:var(--line);box-shadow:0 1px 0 rgba(200,255,77,.025) inset}
-[data-theme="light"] .topbar{background:rgba(244,247,241,.92)}
-.logo{background:#0d1723!important;color:var(--primary);border:1px solid rgba(200,255,77,.55);box-shadow:0 0 20px -8px var(--primary),inset 0 1px 0 rgba(255,255,255,.08)}
-.logo svg{stroke:var(--primary)}.logo svg circle{fill:var(--primary)}
-.nav button:hover,.nav button.active,.side button:hover,.side button.active{background:var(--primary-soft);color:var(--primary)}
-[data-theme="light"] .nav button:hover,[data-theme="light"] .nav button.active,[data-theme="light"] .side button:hover,[data-theme="light"] .side button.active{color:var(--primary-strong)}
-.side button.active::before{background:linear-gradient(var(--primary),var(--violet))}
-.avatar{background:var(--primary-soft);color:var(--primary)}
-.icon-button{background:var(--surface);border-color:var(--line)}
-.hero.hero-3d{
-  background:radial-gradient(560px 340px at 88% 12%,rgba(92,225,255,.14),transparent 65%),radial-gradient(520px 340px at 0% 100%,rgba(200,255,77,.09),transparent 60%),linear-gradient(155deg,#0a1019,#06090f 72%)!important;
-  border-color:rgba(200,255,77,.18);box-shadow:0 30px 60px -34px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.055);
-}
-[data-theme="light"] .hero.hero-3d{background:radial-gradient(560px 340px at 88% 12%,rgba(8,124,145,.2),transparent 65%),radial-gradient(520px 340px at 0% 100%,rgba(91,139,26,.2),transparent 60%),linear-gradient(155deg,#14231b,#0b1510 72%)!important}
-.hero-3d h1{background:linear-gradient(100deg,#f1f7e8 10%,var(--primary) 56%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}
-.hero-copy .eyebrow,.section-title .eyebrow{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--primary);letter-spacing:.14em}
-.hero-copy .eyebrow::before{content:"// ";opacity:.72}
-.hero .btn.primary,[data-theme] .hero .btn.primary{background:linear-gradient(110deg,var(--primary),var(--violet));color:#07100a;box-shadow:0 8px 24px -12px var(--primary),inset 0 1px 0 rgba(255,255,255,.42)}
-.hero .btn.secondary{background:rgba(255,255,255,.045);border-color:rgba(200,255,77,.24);color:#e6edf7}
-.net stop:first-child{stop-color:var(--primary)}.net stop:last-child{stop-color:var(--violet)}.net g[fill]{fill:var(--primary)}
-.cube i{border-color:rgba(92,225,255,.48);background:linear-gradient(135deg,rgba(200,255,77,.11),rgba(92,225,255,.08));box-shadow:inset 0 0 32px rgba(92,225,255,.1)}
-.gp{border-color:rgba(148,175,220,.2);background:rgba(8,14,22,.82);color:#e6edf7;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}
-.gp b{background:var(--primary);box-shadow:0 0 10px var(--primary)}.pt{background:var(--violet);box-shadow:0 0 10px var(--violet)}
-.card{background:var(--surface);border-color:var(--line);box-shadow:var(--shadow)}
-.card:has(.card-actions):hover{border-color:color-mix(in srgb,var(--primary) 42%,var(--line));box-shadow:0 18px 40px -24px rgba(0,0,0,.8),0 0 0 1px color-mix(in srgb,var(--primary) 12%,transparent)}
-.card::before{background:radial-gradient(240px circle at var(--gx,50%) var(--gy,0%),var(--primary-soft),transparent 72%)}
-.stat .num{background:linear-gradient(180deg,var(--text),var(--muted));-webkit-background-clip:text;background-clip:text;color:transparent}
-.btn.primary,[data-theme] .btn.primary{background:linear-gradient(110deg,var(--primary),var(--violet));color:#07100a;box-shadow:0 8px 22px -13px var(--primary),inset 0 1px 0 rgba(255,255,255,.38)}
-.btn.primary:hover:not(:disabled){filter:brightness(1.07)}
-a.btn{text-decoration:none}
-.tag{border:1px solid var(--line);border-radius:7px;background:var(--surface-2);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px;letter-spacing:.025em}
-.tag.open{color:var(--success)}
-.section-title h2::after{background:linear-gradient(90deg,var(--primary),var(--violet))}
-.form input,.form textarea,.form select,.searchrow input,.searchrow select{background:var(--surface-2);border-color:var(--line)}
-button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline-color:var(--primary);box-shadow:0 0 0 3px var(--focus)}
-.modal{background:rgba(2,5,9,.78)}.modalbox{background:var(--surface-hover);border-color:color-mix(in srgb,var(--primary) 18%,var(--line))}
-.toast{background:linear-gradient(110deg,#111a29,#0a111a);border:1px solid color-mix(in srgb,var(--primary) 32%,var(--line));color:var(--text)}
-footer{background:linear-gradient(135deg,#0a1019,#0b1520)!important;border:1px solid var(--line);color:var(--muted)}footer strong{color:var(--primary)}
-[data-theme="light"] footer{background:linear-gradient(135deg,#e8f0e4,#e8f4f2)!important;color:var(--text)}
-.ambient-motion{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;contain:paint}
-.ambient-motion::before,.ambient-motion::after{content:"";position:absolute;pointer-events:none}
-.ambient-motion::before{top:-160px;left:0;right:0;height:160px;background:linear-gradient(to bottom,transparent,rgba(200,255,77,.04),rgba(92,225,255,.022),transparent);animation:ambient-scan 22s linear infinite}
-.ambient-motion::after{inset:-18%;opacity:.72;background:radial-gradient(42rem 30rem at 14% 32%,rgba(92,225,255,.06),transparent 72%),radial-gradient(38rem 30rem at 86% 74%,rgba(200,255,77,.05),transparent 72%);animation:ambient-drift 30s ease-in-out infinite alternate}
-@keyframes ambient-scan{to{transform:translateY(calc(100vh + 320px))}}
-@keyframes ambient-drift{from{transform:translate3d(-1.5%,0,0) scale(.98)}to{transform:translate3d(1.5%,1%,0) scale(1.03)}}
-[data-theme="light"] .ambient-motion::before{background:linear-gradient(to bottom,transparent,rgba(66,107,8,.035),rgba(8,124,145,.025),transparent)}
-[data-theme="light"] .ambient-motion::after{opacity:.5;background:radial-gradient(42rem 30rem at 14% 32%,rgba(8,124,145,.06),transparent 72%),radial-gradient(38rem 30rem at 86% 74%,rgba(91,139,26,.055),transparent 72%)}
-@media(max-width:900px){.hero.hero-3d{gap:4px}.hero-stage{height:270px}}
-@media(max-width:700px){.hero.hero-3d{min-height:0}.hero-stage{height:210px}.gp{background:rgba(8,14,22,.92)}}
-@media(max-width:700px){.ambient-motion::before{animation-duration:28s}.ambient-motion::after{opacity:.4}}
-@media(prefers-reduced-motion:reduce){body::before,.ambient-motion::before,.ambient-motion::after{animation:none!important}.ambient-motion::before{display:none}}
-/* Keep page changes and reveal effects light so scrolling stays fluid. */
-:root{--ease:cubic-bezier(.22,1,.36,1)}
-html{scroll-behavior:smooth;scroll-padding-top:var(--topbar-height)}
-.page.active{animation:page-enter .4s var(--ease) both}
-.page.active .grid:not(#eventGrid):not(.three)>*{animation:rise .34s var(--ease) backwards;animation-delay:calc(var(--i,0)*18ms)}
-.page.active .step{animation:rise .34s var(--ease) backwards;animation-delay:calc(var(--k,0)*45ms + 80ms)}
-.rv{filter:none;transition:opacity .48s var(--ease),transform .48s var(--ease)}
-.topbar{animation-duration:.42s}
-.side button{animation-duration:.34s;animation-delay:calc(var(--n,0)*22ms + 70ms)}
-.sidebar{transition:transform .32s var(--ease)}
-.card,.btn,.icon-button,.nav button,.side button,.userbox{transition-timing-function:var(--ease)}
-@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.page.active,.page.active .grid:not(#eventGrid):not(.three)>*{animation:none!important}.rv{opacity:1!important;filter:none!important;transform:none!important;transition:none!important}}
+html[data-visual-theme="terminal"]{--bg:#04060b;--surface:rgba(12,18,32,.94);--surface-2:#111a29;--surface-hover:#101827;--text:#e6edf7;--muted:#9aa8bd;--line:rgba(148,175,220,.14);--primary:#c8ff4d;--primary-strong:#dcff8a;--primary-soft:rgba(200,255,77,.11);--violet:#5ce1ff;--success:#a7e85c;--danger:#ff6b78;--warning:#ffc861;--sidebar:rgba(7,11,19,.97);--sidebar-text:#c5d0df;--sidebar-muted:#718096;--focus:rgba(200,255,77,.3);--shadow:0 16px 42px -24px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.035)}
+html[data-visual-theme="terminal"][data-theme="dark"]{color-scheme:dark;--bg:#04060b;--surface:rgba(12,18,32,.94);--surface-2:#111a29;--surface-hover:#101827;--text:#e6edf7;--muted:#9aa8bd;--line:rgba(148,175,220,.14);--primary:#c8ff4d;--primary-strong:#dcff8a;--primary-soft:rgba(200,255,77,.11);--violet:#5ce1ff;--success:#a7e85c;--danger:#ff6b78;--warning:#ffc861;--sidebar:rgba(7,11,19,.97);--sidebar-text:#c5d0df;--sidebar-muted:#718096;--focus:rgba(200,255,77,.3);--shadow:0 16px 42px -24px rgba(0,0,0,.9),inset 0 1px 0 rgba(255,255,255,.035)}
+html[data-visual-theme="terminal"][data-theme="light"]{--bg:#f4f7f1;--surface:rgba(255,255,255,.94);--surface-2:#eaf0e5;--surface-hover:#f7faf4;--text:#142018;--muted:#586b5e;--line:rgba(34,65,42,.15);--primary:#426b08;--primary-strong:#345606;--primary-soft:rgba(91,139,26,.11);--violet:#087c91;--success:#397b12;--danger:#b52d3b;--warning:#96570a;--sidebar:#edf2e9;--sidebar-text:#34483a;--sidebar-muted:#718071;--focus:rgba(66,107,8,.27);--shadow:0 12px 30px -18px rgba(25,55,33,.24),inset 0 1px 0 rgba(255,255,255,.9)}
+html[data-visual-theme="terminal"] body{background-color:var(--bg);background-image:radial-gradient(900px 600px at 5% -12%,rgba(92,225,255,.08),transparent 62%),radial-gradient(760px 520px at 100% 4%,rgba(200,255,77,.07),transparent 62%);background-attachment:fixed}
+html[data-visual-theme="terminal"] body::before{display:block;inset:0;width:auto;height:auto;border-radius:0;filter:none;background-image:linear-gradient(to right,rgba(148,175,220,.035) 1px,transparent 1px),linear-gradient(to bottom,rgba(148,175,220,.035) 1px,transparent 1px);background-size:56px 56px;mask-image:radial-gradient(ellipse at 50% 25%,#000 12%,transparent 82%)}
+html[data-visual-theme="terminal"] body::after{display:none}
+html[data-visual-theme="terminal"][data-theme="light"] body{background-image:radial-gradient(900px 600px at 5% -12%,rgba(8,124,145,.08),transparent 62%),radial-gradient(760px 520px at 100% 4%,rgba(91,139,26,.08),transparent 62%)}
+html[data-visual-theme="terminal"][data-theme="light"] body::before{background-image:linear-gradient(to right,rgba(34,65,42,.04) 1px,transparent 1px),linear-gradient(to bottom,rgba(34,65,42,.04) 1px,transparent 1px)}
+html[data-visual-theme="terminal"] #fx{opacity:.18}html[data-visual-theme="terminal"][data-theme="light"] #fx{opacity:.12}
+html[data-visual-theme="terminal"] .topbar{background:rgba(7,11,19,.9);border-bottom-color:var(--line);box-shadow:0 1px 0 rgba(200,255,77,.025) inset}html[data-visual-theme="terminal"][data-theme="light"] .topbar{background:rgba(244,247,241,.92)}
+html[data-visual-theme="terminal"] .logo{background:#0d1723!important;color:var(--primary);border:1px solid rgba(200,255,77,.55);box-shadow:0 0 20px -8px var(--primary),inset 0 1px 0 rgba(255,255,255,.08)}html[data-visual-theme="terminal"] .logo svg{stroke:var(--primary)}html[data-visual-theme="terminal"] .logo svg circle{fill:var(--primary)}
+html[data-visual-theme="terminal"] .nav button:hover,html[data-visual-theme="terminal"] .nav button.active,html[data-visual-theme="terminal"] .side button:hover,html[data-visual-theme="terminal"] .side button.active{background:var(--primary-soft);color:var(--primary)}html[data-visual-theme="terminal"][data-theme="light"] .nav button:hover,html[data-visual-theme="terminal"][data-theme="light"] .nav button.active,html[data-visual-theme="terminal"][data-theme="light"] .side button:hover,html[data-visual-theme="terminal"][data-theme="light"] .side button.active{color:var(--primary-strong)}
+html[data-visual-theme="terminal"] .side button.active::before{background:linear-gradient(var(--primary),var(--violet))}html[data-visual-theme="terminal"] .avatar{background:var(--primary-soft);color:var(--primary)}html[data-visual-theme="terminal"] .icon-button{background:var(--surface);border-color:var(--line)}
+html[data-visual-theme="terminal"] .hero.hero-3d{background:radial-gradient(560px 340px at 88% 12%,rgba(92,225,255,.14),transparent 65%),radial-gradient(520px 340px at 0% 100%,rgba(200,255,77,.09),transparent 60%),linear-gradient(155deg,#0a1019,#06090f 72%)!important;border-color:rgba(200,255,77,.18);box-shadow:0 30px 60px -34px rgba(0,0,0,.95),inset 0 1px 0 rgba(255,255,255,.055)}
+html[data-visual-theme="terminal"][data-theme="light"] .hero.hero-3d{background:radial-gradient(560px 340px at 88% 12%,rgba(8,124,145,.2),transparent 65%),radial-gradient(520px 340px at 0% 100%,rgba(91,139,26,.2),transparent 60%),linear-gradient(155deg,#14231b,#0b1510 72%)!important}
+html[data-visual-theme="terminal"] .hero-3d h1{background:linear-gradient(100deg,#f1f7e8 10%,var(--primary) 56%,var(--violet));-webkit-background-clip:text;background-clip:text;color:transparent}html[data-visual-theme="terminal"] .hero-copy .eyebrow,html[data-visual-theme="terminal"] .section-title .eyebrow{font-family:ui-monospace,SFMono-Regular,Consolas,monospace;color:var(--primary);letter-spacing:.14em}html[data-visual-theme="terminal"] .hero-copy .eyebrow::before{content:"// ";opacity:.72}
+html[data-visual-theme="terminal"] .hero .btn.primary,html[data-visual-theme="terminal"] [data-theme] .hero .btn.primary{background:linear-gradient(110deg,var(--primary),var(--violet));color:#07100a;box-shadow:0 8px 24px -12px var(--primary),inset 0 1px 0 rgba(255,255,255,.42)}html[data-visual-theme="terminal"] .hero .btn.secondary{background:rgba(255,255,255,.045);border-color:rgba(200,255,77,.24);color:#e6edf7}
+html[data-visual-theme="terminal"] .net stop:first-child{stop-color:var(--primary)}html[data-visual-theme="terminal"] .net stop:last-child{stop-color:var(--violet)}html[data-visual-theme="terminal"] .net g[fill]{fill:var(--primary)}html[data-visual-theme="terminal"] .cube i{border-color:rgba(92,225,255,.48);background:linear-gradient(135deg,rgba(200,255,77,.11),rgba(92,225,255,.08));box-shadow:inset 0 0 32px rgba(92,225,255,.1)}
+html[data-visual-theme="terminal"] .gp{border-color:rgba(148,175,220,.2);background:rgba(8,14,22,.82);color:#e6edf7;font-family:ui-monospace,SFMono-Regular,Consolas,monospace}html[data-visual-theme="terminal"] .gp b{background:var(--primary);box-shadow:0 0 10px var(--primary)}html[data-visual-theme="terminal"] .pt{background:var(--violet);box-shadow:0 0 10px var(--violet)}
+html[data-visual-theme="terminal"] .card{background:var(--surface);border-color:var(--line);box-shadow:var(--shadow)}html[data-visual-theme="terminal"] .card:has(.card-actions):hover{border-color:color-mix(in srgb,var(--primary) 42%,var(--line));box-shadow:0 18px 40px -24px rgba(0,0,0,.8),0 0 0 1px color-mix(in srgb,var(--primary) 12%,transparent)}html[data-visual-theme="terminal"] .card::before{background:radial-gradient(240px circle at var(--gx,50%) var(--gy,0%),var(--primary-soft),transparent 72%)}
+html[data-visual-theme="terminal"] .stat .num{background:linear-gradient(180deg,var(--text),var(--muted));-webkit-background-clip:text;background-clip:text;color:transparent}html[data-visual-theme="terminal"] .btn.primary,html[data-visual-theme="terminal"] [data-theme] .btn.primary{background:linear-gradient(110deg,var(--primary),var(--violet));color:#07100a;box-shadow:0 8px 22px -13px var(--primary),inset 0 1px 0 rgba(255,255,255,.38)}html[data-visual-theme="terminal"] .btn.primary:hover:not(:disabled){filter:brightness(1.07)}html[data-visual-theme="terminal"] a.btn{text-decoration:none}
+html[data-visual-theme="terminal"] .tag{border:1px solid var(--line);border-radius:7px;background:var(--surface-2);font-family:ui-monospace,SFMono-Regular,Consolas,monospace;font-size:10px;letter-spacing:.025em}html[data-visual-theme="terminal"] .tag.open{color:var(--success)}html[data-visual-theme="terminal"] .section-title h2::after{background:linear-gradient(90deg,var(--primary),var(--violet))}
+html[data-visual-theme="terminal"] .form input,html[data-visual-theme="terminal"] .form textarea,html[data-visual-theme="terminal"] .form select,html[data-visual-theme="terminal"] .searchrow input,html[data-visual-theme="terminal"] .searchrow select{background:var(--surface-2);border-color:var(--line)}html[data-visual-theme="terminal"] button:focus-visible,html[data-visual-theme="terminal"] a:focus-visible,html[data-visual-theme="terminal"] input:focus-visible,html[data-visual-theme="terminal"] select:focus-visible,html[data-visual-theme="terminal"] textarea:focus-visible{outline-color:var(--primary);box-shadow:0 0 0 3px var(--focus)}
+html[data-visual-theme="terminal"] .modal{background:rgba(2,5,9,.78)}html[data-visual-theme="terminal"] .modalbox{background:var(--surface-hover);border-color:color-mix(in srgb,var(--primary) 18%,var(--line))}html[data-visual-theme="terminal"] .toast{background:linear-gradient(110deg,#111a29,#0a111a);border:1px solid color-mix(in srgb,var(--primary) 32%,var(--line));color:var(--text)}
+html[data-visual-theme="terminal"] footer{background:linear-gradient(135deg,#0a1019,#0b1520)!important;border:1px solid var(--line);color:var(--muted)}html[data-visual-theme="terminal"] footer strong{color:var(--primary)}html[data-visual-theme="terminal"][data-theme="light"] footer{background:linear-gradient(135deg,#e8f0e4,#e8f4f2)!important;color:var(--text)}
+html[data-visual-theme="terminal"] .ambient-motion{position:fixed;inset:0;z-index:0;overflow:hidden;pointer-events:none;contain:paint}html[data-visual-theme="terminal"] .ambient-motion::before,html[data-visual-theme="terminal"] .ambient-motion::after{content:"";position:absolute;pointer-events:none}html[data-visual-theme="terminal"] .ambient-motion::before{top:-160px;left:0;right:0;height:160px;background:linear-gradient(to bottom,transparent,rgba(200,255,77,.04),rgba(92,225,255,.022),transparent);animation:ambient-scan 22s linear infinite}html[data-visual-theme="terminal"] .ambient-motion::after{inset:-18%;opacity:.72;background:radial-gradient(42rem 30rem at 14% 32%,rgba(92,225,255,.06),transparent 72%),radial-gradient(38rem 30rem at 86% 74%,rgba(200,255,77,.05),transparent 72%);animation:ambient-drift 30s ease-in-out infinite alternate}
+@keyframes ambient-scan{to{transform:translateY(calc(100vh + 320px))}}@keyframes ambient-drift{from{transform:translate3d(-1.5%,0,0) scale(.98)}to{transform:translate3d(1.5%,1%,0) scale(1.03)}}
+html[data-visual-theme="terminal"][data-theme="light"] .ambient-motion::before{background:linear-gradient(to bottom,transparent,rgba(66,107,8,.035),rgba(8,124,145,.025),transparent)}html[data-visual-theme="terminal"][data-theme="light"] .ambient-motion::after{opacity:.5;background:radial-gradient(42rem 30rem at 14% 32%,rgba(8,124,145,.06),transparent 72%),radial-gradient(38rem 30rem at 86% 74%,rgba(91,139,26,.055),transparent 72%)}
+@media(max-width:900px){html[data-visual-theme="terminal"] .hero.hero-3d{gap:4px}html[data-visual-theme="terminal"] .hero-stage{height:270px}}@media(max-width:700px){html[data-visual-theme="terminal"] .hero.hero-3d{min-height:0}html[data-visual-theme="terminal"] .hero-stage{height:210px}html[data-visual-theme="terminal"] .gp{background:rgba(8,14,22,.92)}}@media(max-width:700px){html[data-visual-theme="terminal"] .ambient-motion::before{animation-duration:28s}html[data-visual-theme="terminal"] .ambient-motion::after{opacity:.4}}
+@media(prefers-reduced-motion:reduce){html[data-visual-theme="terminal"] body::before,html[data-visual-theme="terminal"] .ambient-motion::before,html[data-visual-theme="terminal"] .ambient-motion::after{animation:none!important}html[data-visual-theme="terminal"] .ambient-motion::before{display:none}}
+
+
+
+/* Progress feedback while an anti-ragging report is assessed and delivered. */
+.report-progress{display:grid;justify-items:center;text-align:center;gap:14px;padding:30px 18px}
+.report-progress-spinner{width:46px;height:46px;border:4px solid var(--line);border-top-color:var(--primary);border-right-color:var(--violet);border-radius:50%;animation:report-progress-spin .8s linear infinite}
+@keyframes report-progress-spin{to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){.report-progress-spinner{animation:none;border-color:var(--primary);border-right-color:var(--violet)}}
+
+/* Keep scrolling responsive on long pages and lower-powered/mobile devices. */
+html{scroll-padding-top:calc(var(--topbar-height) + 14px);scrollbar-gutter:stable}
+body{background-attachment:scroll}
+.page.active{animation:page-in .2s ease both}
+.sidebar,.modalbox{-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
+@media(max-width:700px){.topbar{backdrop-filter:blur(8px)}.page.active{animation:page-in .16s ease both}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}.page.active{animation:none}}
 </style>
 </head>
 <body>
@@ -282,11 +216,11 @@ html{scroll-behavior:smooth;scroll-padding-top:var(--topbar-height)}
   <nav class="nav">
     <button data-page="home">Home</button><button data-page="elections">Elections</button><button data-page="safety">Anti-Ragging</button><button data-page="faculty">Faculty</button><button data-page="events">Events</button><button data-page="notes">Notes</button>
   </nav>
-  <div class="top-actions"><button class="icon-button" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch theme" onclick="toggleTheme()">◐</button><button class="userbox" style="border:0;background:transparent" onclick="showProfileSettings()"><span class="name" id="userName">Sign in</span><div class="avatar" id="userAvatar">?</div></button></div>
+  <div class="top-actions"><button class="icon-button" id="visualThemeToggle" type="button" aria-label="Choose visual style" title="Choose visual style" onclick="openVisualThemeMenu()">◈</button><button class="icon-button" id="themeToggle" type="button" aria-label="Switch to dark mode" title="Switch theme" onclick="toggleTheme()">◐</button><button class="userbox" style="border:0;background:transparent" onclick="showProfileSettings()"><span class="name" id="userName">Sign in</span><div class="avatar" id="userAvatar">?</div></button></div>
 </header>
 
-<div class="drawer-scrim" id="drawerScrim" onclick="toggleSide(false)"></div>
 <div class="app">
+<div class="drawer-scrim" id="drawerScrim" onclick="toggleSide(false)"></div>
 <aside class="sidebar" id="sidebar">
   <div class="side-title">Student Portal</div>
   <div class="side">
@@ -352,8 +286,10 @@ html{scroll-behavior:smooth;scroll-padding-top:var(--topbar-height)}
   <div class="grid two" id="electionGrid" style="margin-top:16px">
     <div class="notice">Sign in to load current elections from the campus portal.</div>
   </div>
-  <div class="section-title"><div><h2>Published Results</h2><p>Verified totals from closed elections.</p></div></div>
-  <div class="grid two" id="publishedResults"><div class="card"><p class="muted">No results have been published yet.</p></div></div>
+  <div id="publishedResultsSection" style="display:none">
+    <div class="section-title"><div><h2>Published Results</h2><p>Verified totals from closed elections.</p></div></div>
+    <div class="grid two" id="publishedResults"><div class="card"><p class="muted">No results have been published yet.</p></div></div>
+  </div>
 </section>
 
 <section id="safety" class="page">
@@ -429,9 +365,10 @@ html{scroll-behavior:smooth;scroll-padding-top:var(--topbar-height)}
     </div>
   </div>
   <div class="card" style="margin-top:16px"><div class="section-title" style="margin:0 0 12px"><div><h3>Election results</h3><p>Review closed election tallies and publish the official results for students.</p></div></div><div id="adminElectionResults" class="grid"></div></div>
+  <div class="card" style="margin-top:16px"><h3>Verified voter roster</h3><p class="muted">Import the approved college list before opening an election. Only roster members who verify their phone can vote.</p><div id="voterRosterSummary" class="notice" style="margin-top:12px">Loading roster status…</div><form class="form" style="margin-top:14px" onsubmit="importVoterRoster(event)"><div><label for="voterRosterFile">Roster file *</label><input id="voterRosterFile" type="file" accept=".csv,.xlsx,.xls,text/csv,application/vnd.openxmlformats-officedocument.spreadsheetml.sheet" required><small class="muted">CSV columns: student_id, name, mobile_number, course, section. The college Excel list can be imported now; phone numbers can be added later.</small></div><button class="btn primary" type="submit">Import roster</button></form><div id="rosterImportResult" class="muted" style="margin-top:12px"></div></div>
   <div class="card" style="margin-top:16px"><h3>Anti-Ragging Reports</h3><p class="muted">Confidential reports, delivery status, and case progress.</p><div id="adminReportList" class="grid" style="margin-top:14px"></div></div>
-  <div class="card" style="margin-top:16px"><h3>Send a student notification</h3><p class="muted">Send a direct campus update to one registered student.</p><form class="form" style="margin-top:14px" onsubmit="sendStudentNotification(event)"><div><label for="notificationStudent">Student *</label><select id="notificationStudent" required></select></div><div><label for="notificationTitle">Title *</label><input id="notificationTitle" maxlength="150" required placeholder="e.g. Election results published"></div><div><label for="notificationMessage">Message *</label><textarea id="notificationMessage" maxlength="2000" required placeholder="Write a concise campus update."></textarea></div><button class="btn primary" type="submit">Send notification</button></form></div>
-  <div class="card" style="margin-top:16px"><h3>Publish a campus event</h3><p class="muted">Post a verified workshop, club activity, seminar or hackathon for students.</p><form class="form" style="margin-top:16px" onsubmit="createEventFromDashboard(event)"><div class="grid two"><div><label>Event name *</label><input id="adminEventName" required maxlength="150" placeholder="e.g. Web Development Workshop"></div><div><label>Category *</label><select id="adminEventType"><option>Workshop</option><option>Hackathon</option><option>Club</option><option>Seminar</option><option>Event</option></select></div></div><div class="grid two"><div><label>Start date and time *</label><input id="adminEventStarts" type="datetime-local" required></div><div><label>Venue</label><input id="adminEventVenue" maxlength="150" placeholder="e.g. Seminar Hall"></div></div><div><label>Description</label><textarea id="adminEventDescription" maxlength="1000" placeholder="Explain what students can expect."></textarea></div><button class="btn primary" type="submit">Publish event</button></form></div>
+  <div class="card" style="margin-top:16px"><h3>Send a student notification</h3><p class="muted">Send a direct campus update to one registered student.</p><form class="form" style="margin-top:14px" onsubmit="sendStudentNotification(event)"><div><label for="notificationStudent">Student *</label><select id="notificationStudent" required></select></div><div><label for="notificationTitle">Title *</label><input id="notificationTitle" maxlength="150" required placeholder="e.g. Election results published"></div><div><label for="notificationMessage">Message *</label><textarea id="notificationMessage" maxlength="2000" required placeholder="Write a concise campus update."></textarea></div><button class="btn primary" type="submit">Send notification</button></form><div style="margin-top:18px"><h4>Manage notifications</h4><div id="adminNotificationList" class="grid" style="margin-top:10px"></div></div></div>
+  <div class="card" style="margin-top:16px"><h3>Publish a campus event</h3><p class="muted">Post a verified workshop, club activity, seminar or hackathon for students.</p><form class="form" style="margin-top:16px" onsubmit="createEventFromDashboard(event)"><div class="grid two"><div><label>Event name *</label><input id="adminEventName" required maxlength="150" placeholder="e.g. Web Development Workshop"></div><div><label>Category *</label><select id="adminEventType"><option>Workshop</option><option>Hackathon</option><option>Club</option><option>Seminar</option><option>Event</option></select></div></div><div class="grid two"><div><label>Start date and time *</label><input id="adminEventStarts" type="datetime-local" required></div><div><label>Venue</label><input id="adminEventVenue" maxlength="150" placeholder="e.g. Seminar Hall"></div></div><div><label>Description</label><textarea id="adminEventDescription" maxlength="1000" placeholder="Explain what students can expect."></textarea></div><button class="btn primary" type="submit">Publish event</button></form><div style="margin-top:18px"><h4>Manage events</h4><div id="adminEventList" class="grid" style="margin-top:10px"></div></div></div>
 </section>
 
 <footer><strong>ELECTICORE</strong><p>Building a Smarter, Safer, and More Connected Campus.</p><span>© 2026 ELECTICORE • Elections • Anti-Ragging • Faculty • Events • Notes</span></footer>
@@ -548,12 +485,25 @@ const events=[
 {name:"Data Structures Notes",type:"Notes",date:"Updated today",place:"Academic Resources",icon:"📚",desc:"Unit-wise study material and revision resources."},
 {name:"Innovation & Startup Workshop",type:"Workshop",date:"4 Oct 2026",place:"Incubation Centre",icon:"🚀",desc:"Turn student ideas into practical prototypes."}];
 
-function showPage(id){const page=document.getElementById(id);if(!page)return;document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));page.classList.add('active');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo({top:0,behavior:'smooth'});toggleSide(false)}
+function showPage(id){const page=document.getElementById(id);if(!page)return;document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));page.classList.add('active');document.querySelectorAll('[data-page]').forEach(b=>b.classList.toggle('active',b.dataset.page===id));window.scrollTo(0,0);toggleSide(false)}
 document.querySelectorAll('[data-page]').forEach(b=>b.addEventListener('click',()=>showPage(b.dataset.page)));
 function toggleSide(force){const sidebar=document.getElementById('sidebar'),scrim=document.getElementById('drawerScrim'),button=document.querySelector('.topbar .mobile'),open=typeof force==='boolean'?force:!sidebar.classList.contains('open');sidebar.classList.toggle('open',open);scrim.classList.toggle('show',open);button.setAttribute('aria-expanded',String(open))}
 function applyTheme(theme){document.documentElement.dataset.theme=theme;const button=document.getElementById('themeToggle');if(button){button.textContent=theme==='dark'?'☼':'◐';button.setAttribute('aria-label',theme==='dark'?'Switch to light mode':'Switch to dark mode');button.title=theme==='dark'?'Switch to light mode':'Switch to dark mode'}}
 function toggleTheme(){const next=document.documentElement.dataset.theme==='dark'?'light':'dark';localStorage.setItem('electicore_theme',next);applyTheme(next)}
+function applyVisualTheme(theme){
+  const selected=theme==='terminal'?'terminal':'aurora';
+  document.documentElement.dataset.visualTheme=selected;
+  localStorage.setItem('electicore_visual_theme',selected);
+  const button=document.getElementById('visualThemeToggle');
+  if(button){const label=selected==='terminal'?'Lime and cyan':'Blue and violet';button.title=`Visual style: ${label}`;button.setAttribute('aria-label',`Visual style: ${label}. Choose another style`)}
+}
+function openVisualThemeMenu(){
+  const selected=document.documentElement.dataset.visualTheme||'aurora';
+  openModal(`<div class="modalhead"><div><h2>Choose a visual style</h2><p class="muted">This changes the look only. Your account and app data stay the same.</p></div><button class="close" onclick="closeModal()" aria-label="Close">×</button></div><div class="grid two" style="margin-top:16px"><button class="card" type="button" aria-pressed="${selected==='aurora'}" onclick="applyVisualTheme('aurora');closeModal()"><span class="tag open">${selected==='aurora'?'Selected':'Style 1'}</span><h3>Blue &amp; violet</h3></button><button class="card" type="button" aria-pressed="${selected==='terminal'}" onclick="applyVisualTheme('terminal');closeModal()"><span class="tag open">${selected==='terminal'?'Selected':'Style 2'}</span><h3>Lime &amp; cyan</h3></button></div>`);
+}
+
 applyTheme(localStorage.getItem('electicore_theme')|| (matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'));
+applyVisualTheme(localStorage.getItem('electicore_visual_theme')||'aurora');
 function toast(msg){const t=document.getElementById('toast');t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500)}
 function openModal(content){document.getElementById('modalContent').innerHTML=content;document.getElementById('modal').classList.add('show')}
 function closeModal(){document.getElementById('modal').classList.remove('show')}
@@ -629,14 +579,48 @@ function setUser(student){
   document.getElementById('userName').textContent=student.name;
   document.getElementById('userAvatar').textContent=student.name.split(/\s+/).map(x=>x[0]).slice(0,2).join('').toUpperCase();
   const isAdmin=student.role==='admin';
+  document.getElementById('publishedResultsSection').style.display=isAdmin?'block':'none';
   document.getElementById('adminTitle').style.display=isAdmin?'block':'none';
   document.getElementById('adminArea').style.display=isAdmin?'block':'none';
-  if(isAdmin){loadAdminStudents();loadAdminReports();}
+  if(isAdmin){loadAdminStudents();loadAdminReports();loadAdminEvents();loadAdminNotifications();loadVoterRosterSummary();}
   refreshMySafetyCount();loadNotifications();loadResources();
 }
 function showAuth(){
   openModal(`<div class="modalhead"><div><h2>Sign in to ELECTICORE</h2><p class="muted">Use your campus portal account.</p></div><button class="close" onclick="closeModal()">×</button></div>
-  <form class="form" onsubmit="authenticate(event)"><div><label>Name <span class="muted">(needed only to create an account)</span></label><input id="authName" maxlength="100" placeholder="Your full name"></div><div><label>Email</label><input id="authEmail" type="email" required placeholder="you@example.edu"></div><div><label>Password</label><input id="authPassword" type="password" minlength="10" required placeholder="At least 10 characters"></div><div class="actions"><button class="btn primary" type="submit">Sign in</button><button class="btn secondary" type="button" onclick="authenticate(event,true)">Create account</button></div></form>`);
+  <form class="form" onsubmit="authenticate(event)"><div><label>Name <span class="muted">(needed only to create an account)</span></label><input id="authName" maxlength="100" placeholder="Your full name"></div><div><label>Email</label><input id="authEmail" type="email" required placeholder="you@example.edu"></div><div><label>Password</label><input id="authPassword" type="password" minlength="10" required placeholder="At least 10 characters"></div><div class="actions"><button class="btn primary" type="submit">Sign in</button><button class="btn secondary" type="button" onclick="authenticate(event,true)">Create account</button></div><button class="btn secondary" type="button" onclick="showForgotPassword()">Forgot password?</button></form>`);
+}
+function showForgotPassword(){
+  openModal(`<div class="modalhead"><div><h2>Reset your password</h2><p class="muted">We’ll email a one-time code to the address registered to your account.</p></div><button class="close" onclick="closeModal()" aria-label="Close">×</button></div>
+    <form class="form" onsubmit="requestPasswordReset(event)"><div><label for="resetEmail">Registered email</label><input id="resetEmail" type="email" autocomplete="email" required placeholder="you@example.edu"></div><button class="btn primary" type="submit">Send reset code</button><button class="btn secondary" type="button" onclick="showAuth()">Back to sign in</button></form>`);
+}
+async function requestPasswordReset(event){
+  event.preventDefault();
+  const email=document.getElementById('resetEmail').value.trim();
+  try{
+    await api('/api/auth/forgot-password',{method:'POST',body:JSON.stringify({email})});
+    showCompletePasswordReset(email);
+    toast('If the account exists, a reset code has been sent');
+  }catch(error){toast(error.message)}
+}
+function showCompletePasswordReset(email){
+  openModal(`<div class="modalhead"><div><h2>Enter your reset code</h2><p class="muted">Check the registered email. The 6-digit code expires in 10 minutes.</p></div><button class="close" onclick="closeModal()" aria-label="Close">×</button></div>
+    <form class="form" onsubmit="completePasswordReset(event)"><input id="resetEmail" type="email" value="${escapeHtml(email)}" hidden><div><label for="resetCode">One-time code</label><input id="resetCode" inputmode="numeric" autocomplete="one-time-code" pattern="[0-9]{6}" maxlength="6" required placeholder="6-digit code"></div><div><label for="resetNewPassword">New password</label><input id="resetNewPassword" type="password" autocomplete="new-password" minlength="10" required placeholder="At least 10 characters"></div><div><label for="resetConfirmPassword">Confirm new password</label><input id="resetConfirmPassword" type="password" autocomplete="new-password" minlength="10" required></div><button class="btn primary" type="submit">Change password</button><button class="btn secondary" type="button" onclick="requestAnotherPasswordCode()">Send another code</button></form>`);
+}
+async function requestAnotherPasswordCode(){
+  const email=document.getElementById('resetEmail').value;
+  try{await api('/api/auth/forgot-password',{method:'POST',body:JSON.stringify({email})});toast('If the account exists, a reset code has been sent');}
+  catch(error){toast(error.message)}
+}
+async function completePasswordReset(event){
+  event.preventDefault();
+  const email=document.getElementById('resetEmail').value;
+  const code=document.getElementById('resetCode').value.trim();
+  const password=document.getElementById('resetNewPassword').value;
+  if(password!==document.getElementById('resetConfirmPassword').value){toast('Passwords do not match');return}
+  try{
+    await api('/api/auth/reset-password',{method:'POST',body:JSON.stringify({email,code,password})});
+    showAuth();toast('Password changed. Sign in with your new password.');
+  }catch(error){toast(error.message)}
 }
 function showProfileSettings(){
   if(!currentStudent){showAuth();toast('Sign in to manage your profile');return}
@@ -646,6 +630,7 @@ function showProfileSettings(){
       <div><label for="profileEmail">Email address</label><input id="profileEmail" type="email" maxlength="120" required value="${escapeHtml(currentStudent.email)}"></div>
       <button class="btn primary" type="submit">Save profile</button>
     </form></section>
+    <section class="card" style="margin-top:14px"><h3>Voting eligibility</h3><p class="muted">${currentStudent.is_voter_verified?'Your approved college roster identity is verified. You can vote in open elections.':'Match your approved college ID and registered mobile number before voting.'}</p>${currentStudent.is_voter_verified?'':'<button class="btn secondary" type="button" onclick="showPhoneVerification()">Verify voting eligibility</button>'}</section>
     <section class="card" style="margin-top:14px"><h3>Change password</h3><form class="form" onsubmit="changePassword(event)">
       <div><label for="currentPassword">Current password</label><input id="currentPassword" type="password" autocomplete="current-password" required></div>
       <div><label for="newPassword">New password</label><input id="newPassword" type="password" autocomplete="new-password" minlength="10" required><small class="muted">Use at least 10 characters.</small></div>
@@ -671,6 +656,21 @@ async function changePassword(event){
     closeModal();toast('Password updated');
   }catch(error){toast(error.message)}
 }
+function showPhoneVerification(){
+  openModal(`<div class="modalhead"><div><h2>Verify for college voting</h2><p class="muted">Enter details exactly as they appear in the approved college roster.</p></div><button class="close" onclick="closeModal()">×</button></div><form class="form" onsubmit="requestPhoneVerification(event)"><div><label for="verificationCollegeId">College ID</label><input id="verificationCollegeId" maxlength="50" required placeholder="e.g. 2024CSE001"></div><div><label for="verificationMobile">Registered mobile number</label><input id="verificationMobile" inputmode="numeric" maxlength="13" required placeholder="10-digit Indian number"></div><button class="btn primary" type="submit">Match roster details</button></form>`);
+}
+async function requestPhoneVerification(event){
+  event.preventDefault();
+  const collegeId=document.getElementById('verificationCollegeId').value.trim(),mobileNumber=document.getElementById('verificationMobile').value.trim();
+  try{const result=await api('/api/auth/phone-verification/request',{method:'POST',body:JSON.stringify({college_id:collegeId,mobile_number:mobileNumber})});if(result.verification_mode==='roster_match'){setUser(result.student);closeModal();toast('College roster matched. You can now vote.');return}showPhoneVerificationCode(collegeId);toast('If eligible, a verification code has been sent');}catch(error){toast(error.message)}
+}
+function showPhoneVerificationCode(collegeId){
+  openModal(`<div class="modalhead"><div><h2>Enter verification code</h2><p class="muted">The code expires in 10 minutes.</p></div><button class="close" onclick="closeModal()">×</button></div><form class="form" onsubmit="confirmPhoneVerification(event)"><input id="verificationCollegeId" value="${escapeHtml(collegeId)}" hidden><div><label for="verificationCode">6-digit code</label><input id="verificationCode" inputmode="numeric" pattern="[0-9]{6}" maxlength="6" required placeholder="123456"></div><button class="btn primary" type="submit">Verify and enable voting</button></form>`);
+}
+async function confirmPhoneVerification(event){
+  event.preventDefault();
+  try{const result=await api('/api/auth/phone-verification/confirm',{method:'POST',body:JSON.stringify({college_id:document.getElementById('verificationCollegeId').value,code:document.getElementById('verificationCode').value.trim()})});setUser(result.student);closeModal();toast('Phone verified. You can now vote.');}catch(error){toast(error.message)}
+}
 async function authenticate(event,register=false){
   event.preventDefault();
   const email=document.getElementById('authEmail').value,password=document.getElementById('authPassword').value;
@@ -691,7 +691,7 @@ async function loadElections(){
     const openCount=serverElections.filter(e=>e.status==='open').length;
     document.getElementById('electionCount').textContent=`${openCount} open · ${serverElections.length} total`;
     document.getElementById('statActiveElections').textContent=openCount;
-    grid.innerHTML=serverElections.length?serverElections.map(e=>`<article class="card"><span class="tag ${e.status==='open'?'open':e.status==='upcoming'?'pending':'closed'}">${escapeHtml(e.status)}</span><h3>${escapeHtml(e.title)}</h3><p class="muted">${escapeHtml(e.description||'Campus election')}</p><p class="muted"><strong>Voting ${e.status==='upcoming'?'opens':'closes'}:</strong> ${new Date(e.status==='upcoming'?e.start_date:e.end_date).toLocaleString()}</p><p class="muted">${e.candidates.length} candidates</p>${e.status==='open'?`<button class="btn primary" onclick="openVote(${e.id})">Review candidates & vote</button>`:e.results_published?'<span class="tag open">Official results published</span>':`<button class="btn secondary" disabled>${e.status==='upcoming'?'Voting not open':'Voting closed'}</button>`}</article>`).join(''):'<div class="card"><p class="muted">There are no elections yet. Check back when your campus publishes one.</p></div>';
+    grid.innerHTML=serverElections.length?serverElections.map(e=>`<article class="card"><span class="tag ${e.status==='open'?'open':e.status==='upcoming'?'pending':'closed'}">${escapeHtml(e.status)}</span><h3>${escapeHtml(e.title)}</h3><p class="muted">${escapeHtml(e.description||'Campus election')}</p><p class="muted"><strong>Voting ${e.status==='upcoming'?'opens':'closes'}:</strong> ${new Date(e.status==='upcoming'?e.start_date:e.end_date).toLocaleString()}</p><p class="muted">${e.candidates.length} candidates</p>${e.status==='open'?(e.has_voted?'<span class="tag">Vote submitted</span>':`<button class="btn primary" onclick="openVote(${e.id})">Review candidates & vote</button>`):e.results_published?'<span class="tag open">Official results published</span>':`<button class="btn secondary" disabled>${e.status==='upcoming'?'Voting not open':'Voting closed'}</button>`}</article>`).join(''):'<div class="card"><p class="muted">There are no elections yet. Check back when your campus publishes one.</p></div>';
     renderRecentActivity();
     renderPublishedResults();
     if(currentStudent?.role==='admin')loadAdminElectionResults();
@@ -706,6 +706,7 @@ function renderRecentActivity(){
   target.innerHTML=electionCard+eventCard;
 }
 async function renderPublishedResults(){
+  if(currentStudent?.role!=='admin')return;
   const target=document.getElementById('publishedResults');
   const released=serverElections.filter(e=>e.status==='closed'&&e.results_published);
   if(!released.length){target.innerHTML='<div class="card"><p class="muted">No official election results have been published yet.</p></div>';return}
@@ -736,7 +737,7 @@ async function markNotificationRead(id){try{await api(`/api/notifications/${id}/
 async function markAllNotificationsRead(){try{await api('/api/notifications/read-all',{method:'POST'});await loadNotifications();toast('Notifications marked as read')}catch(error){toast(error.message)}}
 async function sendStudentNotification(event){
   event.preventDefault();
-  try{await api('/api/notifications',{method:'POST',body:JSON.stringify({student_id:Number(document.getElementById('notificationStudent').value),title:document.getElementById('notificationTitle').value.trim(),message:document.getElementById('notificationMessage').value.trim()})});event.target.reset();toast('Notification sent');}
+  try{await api('/api/notifications',{method:'POST',body:JSON.stringify({student_id:Number(document.getElementById('notificationStudent').value),title:document.getElementById('notificationTitle').value.trim(),message:document.getElementById('notificationMessage').value.trim()})});event.target.reset();toast('Notification sent');loadAdminNotifications();}
   catch(error){toast(error.message)}
 }
 document.getElementById('statFaculty').textContent=faculty.length;
@@ -747,6 +748,24 @@ async function loadAdminStudents(){
     select.innerHTML=students.map(s=>`<option value="${s.id}">${escapeHtml(s.name)} — ${escapeHtml(s.email)}</option>`).join('');
     document.getElementById('notificationStudent').innerHTML='<option value="">Choose a student</option>'+students.map(s=>`<option value="${s.id}">${escapeHtml(s.name)} — ${escapeHtml(s.email)}</option>`).join('');
   }catch(err){toast(err.message)}
+}
+async function importVoterRoster(event){
+  event.preventDefault();
+  const file=document.getElementById('voterRosterFile').files[0],result=document.getElementById('rosterImportResult');
+  if(!file)return;
+  const formData=new FormData();formData.append('file',file);
+  try{
+    const response=await fetch('/api/admin/voter-roster/import',{method:'POST',headers:{Authorization:`Bearer ${authToken}`},body:formData});
+    const data=await response.json().catch(()=>({}));
+    if(!response.ok)throw new Error(data.error||'Roster import failed');
+    result.textContent=`Imported ${data.created} new and updated ${data.updated} roster entries.${data.phone_pending?` ${data.phone_pending} entry/entries still need a mobile number before OTP verification.`:''}${data.errors?.length?` ${data.errors.length} row issue(s): ${data.errors.join(' · ')}`:''}`;
+    event.target.reset();await loadVoterRosterSummary();toast('Verified voter roster imported');
+  }catch(error){result.textContent='';toast(error.message)}
+}
+async function loadVoterRosterSummary(){
+  const target=document.getElementById('voterRosterSummary');if(!target)return;
+  try{const {summary}=await api('/api/admin/voter-roster');target.textContent=`${summary.total} approved students · ${summary.active} active · ${summary.verified} phone-verified voters · ${summary.phone_pending} phone number(s) pending`;}
+  catch(error){target.textContent='Roster status could not be loaded.';}
 }
 function loadAdminElectionResults(){
   const target=document.getElementById('adminElectionResults');
@@ -776,7 +795,7 @@ async function loadAdminReports(){
   try{
     const reports=(await api('/api/reports')).reports;
     const target=document.getElementById('adminReportList');
-    target.innerHTML=reports.length?reports.map(report=>`<article class="card"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><strong>Report AR-${report.id}</strong><span class="tag ${report.delivery_status==='sent'?'open':'pending'}">Email: ${escapeHtml(report.delivery_status.replaceAll('_',' '))}</span></div><p class="muted">${escapeHtml(report.student.name)} (${escapeHtml(report.student.email)}) · ${new Date(report.created_at).toLocaleString()}</p><div class="notice ${report.ai_severity==='extreme'?'warning':report.ai_severity==='moderate'?'pending':report.ai_severity==='low'?'safe':' '}"><strong>Preliminary AI urgency estimate: ${escapeHtml(report.ai_severity||'unassessed')}</strong><br>${escapeHtml(report.ai_assessment_note||'Human review required.')}</div><p>${escapeHtml(report.incident)}</p><p class="muted">Incident: ${escapeHtml(report.incident_date||'Date not provided')} · ${escapeHtml(report.incident_time||'Time not provided')} · ${escapeHtml(report.location||'Location not provided')}</p>${report.people_involved?`<p><strong>People involved:</strong> ${escapeHtml(report.people_involved)}</p>`:''}${report.additional_details?`<p><strong>Additional details:</strong> ${escapeHtml(report.additional_details)}</p>`:''}<details><summary>View generated committee email</summary><pre style="white-space:pre-wrap;font:inherit" class="muted">${escapeHtml(report.ai_draft||'Draft is unavailable.')}</pre></details><div class="card-actions"><label class="muted" for="reportStatus-${report.id}">Case status</label><select id="reportStatus-${report.id}"><option value="submitted" ${report.status==='submitted'?'selected':''}>Submitted</option><option value="under_review" ${report.status==='under_review'?'selected':''}>Under review</option><option value="resolved" ${report.status==='resolved'?'selected':''}>Resolved</option><option value="closed" ${report.status==='closed'?'selected':''}>Closed</option></select><button class="btn secondary" onclick="updateReportStatus(${report.id})">Save status</button></div></article>`).join(''):'<p class="muted">No reports have been submitted.</p>';
+    target.innerHTML=reports.length?reports.map(report=>`<article class="card"><div style="display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap"><strong>Report AR-${report.id}</strong><span class="tag ${report.delivery_status==='sent'?'open':'pending'}">Email: ${escapeHtml(report.delivery_status.replaceAll('_',' '))}</span></div><p class="muted">${escapeHtml(report.student.name)} (${escapeHtml(report.student.email)}) · ${new Date(report.created_at).toLocaleString()}</p><div class="notice ${report.ai_severity==='extreme'?'warning':report.ai_severity==='moderate'?'pending':report.ai_severity==='low'?'safe':' '}"><strong>Preliminary AI urgency estimate: ${escapeHtml(report.ai_severity||'unassessed')}</strong><br>${escapeHtml(report.ai_assessment_note||'Human review required.')}</div><p>${escapeHtml(report.incident)}</p><p class="muted">Incident: ${escapeHtml(report.incident_date||'Date not provided')} · ${escapeHtml(report.incident_time||'Time not provided')} · ${escapeHtml(report.location||'Location not provided')}</p>${report.people_involved?`<p><strong>People involved:</strong> ${escapeHtml(report.people_involved)}</p>`:''}${report.additional_details?`<p><strong>Additional details:</strong> ${escapeHtml(report.additional_details)}</p>`:''}<details><summary>View generated committee email</summary><pre style="white-space:pre-wrap;font:inherit" class="muted">${escapeHtml(report.ai_draft||'Draft is unavailable.')}</pre></details><div class="card-actions"><label class="muted" for="reportStatus-${report.id}">Case status</label><select id="reportStatus-${report.id}"><option value="submitted" ${report.status==='submitted'?'selected':''}>Submitted</option><option value="under_review" ${report.status==='under_review'?'selected':''}>Under review</option><option value="resolved" ${report.status==='resolved'?'selected':''}>Resolved</option><option value="closed" ${report.status==='closed'?'selected':''}>Closed</option></select><button class="btn secondary" onclick="updateReportStatus(${report.id})">Save status</button><button class="btn secondary" onclick="deleteSafetyReport(${report.id})">Delete report/email</button></div></article>`).join(''):'<p class="muted">No reports have been submitted.</p>';
   }catch(err){toast(err.message)}
 }
 async function updateReportStatus(reportId){
@@ -799,15 +818,46 @@ async function createElectionFromDashboard(event){
     event.target.reset();toast(`Election published: ${result.election.title}`);loadElections();showPage('elections');
   }catch(err){toast(err.message)}
 }
+async function loadAdminEvents(){
+  try{
+    const events=(await api('/api/events')).events,target=document.getElementById('adminEventList');
+    target.innerHTML=events.length?events.map(item=>`<article class="card"><strong>${escapeHtml(item.name)}</strong><p class="muted">${escapeHtml(item.type)} · ${escapeHtml(item.venue||'Campus')} · ${new Date(item.starts_at).toLocaleString()}</p><button class="btn secondary" onclick="deleteCampusEvent(${item.id})">Delete event</button></article>`).join(''):'<p class="muted">No events to manage.</p>';
+  }catch(error){toast(error.message)}
+}
+async function deleteCampusEvent(id){
+  if(!confirm('Delete this event for all students?'))return;
+  try{await api(`/api/events/${id}`,{method:'DELETE'});toast('Event deleted for all students');await Promise.all([loadAdminEvents(),loadPortalEvents()])}
+  catch(error){toast(error.message)}
+}
+async function loadAdminNotifications(){
+  try{
+    const items=(await api('/api/notifications/admin')).notifications,target=document.getElementById('adminNotificationList');
+    target.innerHTML=items.length?items.map(item=>`<article class="card"><strong>${escapeHtml(item.title)}</strong><p class="muted">For ${escapeHtml(item.student.name)} (${escapeHtml(item.student.email)}) · ${new Date(item.created_at).toLocaleString()} · ${item.is_read?'Read':'Unread'}</p><p>${escapeHtml(item.message)}</p><button class="btn secondary" onclick="deleteCampusNotification(${item.id})">Delete notification</button></article>`).join(''):'<p class="muted">No notifications to manage.</p>';
+  }catch(error){toast(error.message)}
+}
+async function deleteCampusNotification(id){
+  if(!confirm('Delete this notification from the recipient’s account?'))return;
+  try{await api(`/api/notifications/${id}`,{method:'DELETE'});toast('Notification deleted');await Promise.all([loadAdminNotifications(),loadNotifications()])}
+  catch(error){toast(error.message)}
+}
+async function deleteSafetyReport(id){
+  if(!confirm('Delete this stored report and its email draft? Any email already delivered cannot be recalled.'))return;
+  try{await api(`/api/reports/${id}`,{method:'DELETE'});toast('Stored report and email draft deleted');await loadAdminReports()}
+  catch(error){toast(error.message)}
+}
 async function createEventFromDashboard(event){
   event.preventDefault();
   try{
     await api('/api/events',{method:'POST',body:JSON.stringify({name:document.getElementById('adminEventName').value,type:document.getElementById('adminEventType').value,starts_at:document.getElementById('adminEventStarts').value,venue:document.getElementById('adminEventVenue').value,description:document.getElementById('adminEventDescription').value})});
-    event.target.reset();toast('Campus event published');loadPortalEvents();
+    event.target.reset();toast('Campus event published');loadPortalEvents();loadAdminEvents();
   }catch(err){toast(err.message)}
 }
 async function openVote(id){
   if(!authToken){showAuth();return}
+  if(!currentStudent?.is_voter_verified){
+    openModal(`<div class="modalhead"><div><h2>Verify before voting</h2><p class="muted">Only approved college roster members can vote.</p></div><button class="close" onclick="closeModal()">×</button></div><div class="notice warning">Verify the mobile number registered in your college roster to unlock voting. This protects your election from unapproved accounts.</div><div class="actions" style="margin-top:16px"><button class="btn secondary" onclick="closeModal()">Not now</button><button class="btn primary" onclick="closeModal();showPhoneVerification()">Verify phone</button></div>`);
+    return;
+  }
   selectedElection=serverElections.find(e=>e.id===id);
   if(!selectedElection){toast('Refresh elections and try again');return}
   const options=selectedElection.candidates.map(c=>`<label class="card candidate"><input type="radio" name="candidate" value="${c.id}"><div><strong>${escapeHtml(c.name)}</strong><div class="muted">${escapeHtml(c.manifesto||'No manifesto provided.')}</div></div></label>`).join('');
@@ -823,20 +873,25 @@ async function voteDone(candidateId){
 }
 async function submitReport(event){
   event.preventDefault();if(!authToken){showAuth();return}
+  const form=event.currentTarget,submitButton=event.submitter,originalButtonText=submitButton?.textContent;
   const incident=document.getElementById('incident').value.trim(),location=document.getElementById('reportLocation').value.trim();
+  if(submitButton){submitButton.disabled=true;submitButton.textContent='Submitting…'}
+  openModal(`<div class="report-progress" role="status" aria-live="polite" aria-busy="true"><div class="report-progress-spinner" aria-hidden="true"></div><div><h2>Preparing your confidential report</h2><p class="muted">The urgency assessment and email draft are being prepared, then secure email delivery is attempted. Please keep this page open.</p></div></div>`);
   try{
     const report=(await api('/api/reports',{method:'POST',body:JSON.stringify({incident,location,incident_date:document.getElementById('reportDate').value,incident_time:document.getElementById('reportTime').value,people_involved:document.getElementById('peopleInvolved').value.trim(),additional_details:document.getElementById('additionalDetails').value.trim(),ai_drafting_consent:document.getElementById('aiDraftConsent').checked})})).report;
-    event.target.reset();
-    const delivery=report.delivery_status==='sent'?`The alert was sent to ${escapeHtml(report.recipient_email)}.`:'The report is securely stored. The institution still needs to configure its approved email service before automatic delivery can occur.';
+    form.reset();
+    const delivery=report.delivery_status==='sent'?`The alert was sent to ${escapeHtml(report.recipient_email)}.`:report.delivery_status==='failed'?'The report was saved, but email delivery failed. An administrator can review the saved report.':'The report was saved, but campus email delivery is not configured yet.';
+    const deliveryClass=report.delivery_status==='sent'?'safe':'warning';
     const severity=report.ai_severity||'unassessed';
     const severityClass=severity==='extreme'?'warning':severity==='moderate'||severity==='unassessed'?'pending':'safe';
     const severityLabel=severity==='unassessed'?'Not assessed':severity[0].toUpperCase()+severity.slice(1);
     const resultHeading=severity==='unassessed'?'Report submitted — factual template used':'AI-assisted draft and urgency review';
     const draftLabel=severity==='unassessed'?'Email prepared for the configured campus recipient':'Polished AI email draft for the configured campus recipient';
     const urgentMessage=severity==='extreme'?'<div class="notice warning" style="margin-top:10px"><strong>Possible immediate danger.</strong> Contact campus security or local emergency services now. This estimate is not a substitute for urgent help.</div>':'';
-    openModal(`<div class="modalhead"><div><h2>Report AR-${report.id} submitted</h2><p class="muted">${resultHeading}</p></div><button class="close" onclick="closeModal()">×</button></div><div class="notice safe">${delivery}</div><div class="card" style="margin-top:12px"><strong>Preliminary AI urgency estimate: </strong><span class="tag ${severityClass}">${escapeHtml(severityLabel)}</span><p class="muted" style="margin-bottom:0">${escapeHtml(report.ai_assessment_note||'A human reviewer should assess this report.')}</p></div>${urgentMessage}<div class="form" style="margin-top:16px"><div><label>${draftLabel}</label><textarea readonly>${escapeHtml(report.ai_draft)}</textarea></div></div><p class="muted">The estimate is advisory and must be reviewed by the committee. Track the report from “View My Report Status”.</p><button class="btn primary" onclick="closeModal()">Done</button>`);
+    openModal(`<div class="modalhead"><div><h2>Report AR-${report.id} submitted</h2><p class="muted">${resultHeading}</p></div><button class="close" onclick="closeModal()">×</button></div><div class="notice ${deliveryClass}">${delivery}</div><div class="card" style="margin-top:12px"><strong>Preliminary AI urgency estimate: </strong><span class="tag ${severityClass}">${escapeHtml(severityLabel)}</span><p class="muted" style="margin-bottom:0">${escapeHtml(report.ai_assessment_note||'A human reviewer should assess this report.')}</p></div>${urgentMessage}<div class="form" style="margin-top:16px"><div><label>${draftLabel}</label><textarea readonly>${escapeHtml(report.ai_draft)}</textarea></div></div><p class="muted">The estimate is advisory and must be reviewed by the committee. Track the report from “View My Report Status”.</p><button class="btn primary" onclick="closeModal()">Done</button>`);
     if(document.getElementById('adminArea').style.display!=='none')loadAdminReports();
-  }catch(err){toast(err.message)}
+  }catch(err){closeModal();toast(err.message)}
+  finally{if(submitButton){submitButton.disabled=false;submitButton.textContent=originalButtonText}}
 }
 async function openStatus(){
   if(!authToken){showAuth();return}
@@ -846,7 +901,7 @@ async function openStatus(){
     openModal(`<div class="modalhead"><div><h2>My confidential reports</h2><p class="muted">Only you and authorised reviewers can see this information.</p></div><button class="close" onclick="closeModal()">×</button></div><div class="grid status-report-list" style="margin-top:16px">${body}</div>`);
   }catch(err){toast(err.message)}
 }
-function logout(){authToken=null;currentStudent=null;serverElections=[];localStorage.removeItem('electicore_token');document.getElementById('userName').textContent='Sign in';document.getElementById('userAvatar').textContent='?';document.getElementById('adminTitle').style.display='none';document.getElementById('adminArea').style.display='none';document.getElementById('statActiveElections').textContent='—';document.getElementById('statSafety').textContent='—';document.getElementById('electionCount').textContent='Sign in to view';document.getElementById('electionGrid').innerHTML='<div class="card"><p class="muted">Sign in to load current campus elections.</p></div>';document.getElementById('publishedResults').innerHTML='<div class="card"><p class="muted">Sign in to view published campus election results.</p></div>';document.getElementById('recentActivity').innerHTML='<div class="card"><p class="muted">Sign in to see current elections and activity.</p></div><div class="card"><p class="muted">Campus events will appear here when published.</p></div>';loadNotifications();loadResources();toast('Signed out');}
+function logout(){authToken=null;currentStudent=null;serverElections=[];localStorage.removeItem('electicore_token');document.getElementById('userName').textContent='Sign in';document.getElementById('userAvatar').textContent='?';document.getElementById('publishedResultsSection').style.display='none';document.getElementById('adminTitle').style.display='none';document.getElementById('adminArea').style.display='none';document.getElementById('statActiveElections').textContent='—';document.getElementById('statSafety').textContent='—';document.getElementById('electionCount').textContent='Sign in to view';document.getElementById('electionGrid').innerHTML='<div class="card"><p class="muted">Sign in to load current campus elections.</p></div>';document.getElementById('publishedResults').innerHTML='<div class="card"><p class="muted">Sign in to view published campus election results.</p></div>';document.getElementById('recentActivity').innerHTML='<div class="card"><p class="muted">Sign in to see current elections and activity.</p></div><div class="card"><p class="muted">Campus events will appear here when published.</p></div>';loadNotifications();loadResources();toast('Signed out');}
 // API-backed Events and Notes Hub.
 let portalEvents=[];
 function eventIcon(type){return ({Hackathon:'💻',Workshop:'🌐',Club:'👥',Seminar:'🎓',Event:'📅'})[type]||'📢'}
@@ -873,7 +928,7 @@ async function deleteResource(resourceId){
 }
 function showUploadResource(){
   if(!authToken){showAuth();return}
-  openModal(`<div class="modalhead"><div><h2>Upload study resource</h2><p class="muted">Share course material responsibly. Maximum file size: 15 MB.</p></div><button class="close" onclick="closeModal()">×</button></div><form class="form" onsubmit="uploadResource(event)"><div><label>Resource title *</label><input name="title" maxlength="150" required placeholder="e.g. Data Structures Unit 2 Notes"></div><div><label>Subject *</label><input name="subject" maxlength="100" required placeholder="e.g. Data Structures"></div><div><label>Short description</label><textarea name="description" maxlength="1000" placeholder="What does this resource cover?"></textarea></div><div><label>File *</label><input name="file" type="file" required accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.zip"></div><p class="muted" style="font-size:13px">Allowed: PDF, DOC, DOCX, PPT, PPTX, TXT and ZIP.</p><button class="btn primary" type="submit">Upload resource</button></form>`)
+  openModal(`<div class="modalhead"><div><h2>Upload study resource</h2><p class="muted">Share course material responsibly. Maximum file size: 100 MB.</p></div><button class="close" onclick="closeModal()">×</button></div><form class="form" onsubmit="uploadResource(event)"><div><label>Resource title *</label><input name="title" maxlength="150" required placeholder="e.g. Data Structures Unit 2 Notes"></div><div><label>Subject *</label><input name="subject" maxlength="100" required placeholder="e.g. Data Structures"></div><div><label>Short description</label><textarea name="description" maxlength="1000" placeholder="What does this resource cover?"></textarea></div><div><label>File *</label><input name="file" type="file" required accept=".pdf,.doc,.docx,.ppt,.pptx,.txt,.zip"></div><p class="muted" style="font-size:13px">Allowed: PDF, DOC, DOCX, PPT, PPTX, TXT and ZIP.</p><button class="btn primary" type="submit">Upload resource</button></form>`)
 }
 async function uploadResource(event){
   event.preventDefault();
